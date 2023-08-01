@@ -1,0 +1,34 @@
+<h2>Selected shop Items</h2>
+<table border="1">
+  <tr>
+    <th>Product Id</th>
+    <th>Name</th>
+    <th>ShopId</th>
+    <th>Category</th>
+    <th>Review</th>
+    <th>Rating</th>
+    <th>Price</th>
+  </tr>
+  <tr *ngFor="let item of shopItems">
+    <td>{{ item.productId }}</td>
+    <td>{{ item.name }}</td>
+    <td>{{ item.shopId }}</td>
+    <td>{{ item.category }}</td>
+    <td>{{ item.review }}</td>
+    <td>{{ item.rating }}</td>
+    <td>{{ item.price }}</td>
+    <td>
+      <button
+        class="btn btn-primary"
+        (click)="addToCart(item.productId, item.price, item.shopId)"
+      >
+        Add to Cart
+      </button>
+    </td>
+  </tr>
+</table>
+<hr />
+<button class="btn btn-primary" (click)="getCartItems()">Get Cart Items</button>
+<ul *ngFor="let cart of cartItems">
+  <li>{{ cart }}</li>
+</ul>

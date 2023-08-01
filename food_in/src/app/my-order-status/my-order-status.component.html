@@ -1,0 +1,44 @@
+<h2>Order Status</h2>
+<table border="1">
+  <tr>
+    <th>OrderId</th>
+    <th>ShopId</th>
+    <th>userId</th>
+    <th>orderStatus</th>
+    <th>dateTime</th>
+  </tr>
+  <tr *ngFor="let order of orderStatus">
+    <td>{{ order.orderId }}</td>
+    <td>{{ order.shopId }}</td>
+    <td>{{ order.userId }}</td>
+    <!-- <td>{{ order.orderStatus }}</td> -->
+    <td
+      *ngIf="order.orderStatus == 0"
+      style="background-color: rgb(247, 139, 139)"
+    >
+      Order Not Accepted
+    </td>
+    <td
+      *ngIf="order.orderStatus == 1"
+      style="background-color: rgb(163, 247, 139)"
+    >
+      Order Accepted
+    </td>
+
+    <td>{{ order.dateTime }}</td>
+
+    <!-- <td>
+      <button
+        class="btn btn-primary"
+        (click)="addToCart(item.productId, item.price, item.shopId)"
+      >
+        Add to Cart
+      </button>
+    </td> -->
+  </tr>
+</table>
+<hr />
+<!-- <button class="btn btn-primary" (click)="getCartItems()">Get Cart Items</button>
+<ul *ngFor="let cart of cartItems">
+  <li>{{ cart }}</li> 
+</ul>-->

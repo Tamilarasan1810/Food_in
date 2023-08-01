@@ -1,0 +1,6 @@
+<ul *ngFor="let cart of cartItems">
+  <li>{{ cart.productId }}</li>
+</ul>
+<button class="btn btn-primary" (click)="updateOrders()">
+  Update all orders
+</button>

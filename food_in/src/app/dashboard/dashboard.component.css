@@ -1,0 +1,30 @@
+/* .shops {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-column-gap: 10px;
+} */
+
+.shops {
+  text-align: center;
+
+  height: 100px;
+  display: grid;
+  grid-auto-columns: 100px;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 2fr));
+  gap: 10px;
+}
+.card {
+  box-shadow: 10px 5px 5px rgb(111, 109, 109);
+}
+
+table {
+  border-collapse: separate; /* Ensure borders are separate */
+  border-spacing: 10px; /* Set the spacing between cells */
+}
+
+/* Style the table cells with borders */
+td,
+th {
+  border: 1px solid black; /* Add borders to the cells */
+  padding: 10px; /* Optional: Add padding inside the cells */
+}

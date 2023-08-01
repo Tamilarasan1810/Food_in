@@ -1,0 +1,41 @@
+<button class="btn btn-success" (click)="getShops()">get shops</button>
+
+<div>
+  <div>
+    <table border="1">
+      <tr>
+        <th>ShopId</th>
+        <th>Shop Name</th>
+        <th>Shop Rating</th>
+      </tr>
+      <tr *ngFor="let item of shops">
+        <td>
+          {{ item.shopId }}
+        </td>
+        <td>
+          <button class="btn btn-primary" (click)="log(item.shopId)">
+            {{ item.shopName }}
+          </button>
+        </td>
+        <td>
+          {{ item.rating }}
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+<!-- <div class="shops">
+  <div
+    *ngFor="let shop of shops"
+    class="card mx-auto mb-3"
+    style="width: 18rem"
+  >
+    <img src="{{ shop.imageUrl }}" class="card-img-top" alt="..." />
+    <div class="card-body">
+      <p class="card-text">
+        {{ shop.name }}
+      </p>
+      <h6>{{ shop.rating }}</h6>
+    </div>
+  </div>
+</div> -->

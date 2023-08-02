@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { FoodServicesService } from '../food-services.service';
+import { ShopOrderListsOwner } from '../models/shop-order-lists-owner';
 
 @Component({
   selector: 'app-shop-order-owner',
@@ -31,6 +32,56 @@ export class ShopOrderOwnerComponent {
         console.log('Error inserting Order: ', error);
       }
     );
+  }
+  ordersList: ShopOrderListsOwner = {
+    orderId: 'O0004',
+    products: [
+      {
+        productId: 'P0001',
+        name: 'shawarma',
+        shopId: 'S0001',
+        category: 'NON-VEG',
+        review: 'No review',
+        rating: 4.2,
+        price: 160,
+      },
+      {
+        productId: 'P0002',
+        name: 'Dosai',
+        shopId: 'S0001',
+        category: 'VEG',
+        review: 'No review',
+        rating: 4.2,
+        price: 40,
+      },
+      {
+        productId: 'P0003',
+        name: 'Chicken Biriyani',
+        shopId: 'S0001',
+        category: 'NON-VEG',
+        review: 'No review',
+        rating: 4.2,
+        price: 180,
+      },
+    ],
+  };
+  showProducts: boolean = false;
+
+  toggleProducts() {
+    this.showProducts = !this.showProducts;
+  }
+  getOrderProducts(orderId: string) {
+    this.foodServices.getProductsListByOrderId(orderId).subscribe(
+      (response) => {
+        //console.log('Response from server:', response);
+        this.ordersList = response;
+        console.log(this.ordersList);
+      },
+      (error) => {
+        console.error('Error from server:', error);
+      }
+    );
+    console.log('clicked!!');
   }
 
   // updateOrders() {

@@ -4,6 +4,9 @@ import { HttpClient } from '@angular/common/http';
 import { ShopItems } from './models/shop-items';
 import { Observable } from 'rxjs';
 import { CartItems } from './models/cart-items';
+import { ShopOrderListsOwner } from './models/shop-order-lists-owner';
+
+import { map } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root',
@@ -150,14 +153,6 @@ export class FoodServicesService {
 
   //to update the orderStatus of the order
 
-  //shopSideOrderStatus: any;
-  //shopSideOrderStatusChanged = new EventEmitter<[]>();
-  // updateOrderStatus(orderId:string,userId:string) {
-
-  //  this.updateShopOrderStatus(orderId,userId);
-  //  this.shopSideOrderStatusChanged.emit(this.shopSideOrderStatus);
-  //}
-
   updateShopOrderStatus(orderId: string, status: number): Observable<any> {
     const getShopOrderStatus = `http://localhost:3000/api/updateShopOrderStatus`;
 
@@ -167,6 +162,41 @@ export class FoodServicesService {
     });
   }
 
+  //to fetch the orderId list items to the owners list
+
+  // getProductsListByOrderId(orderId: string): Observable<ShopOrderListsOwner[]> {
+  //   const getProductsListByOrderIdUrl = `http://localhost:3000/api/getProductsListByOrderId`;
+  //   return this.http.post<ShopOrderListsOwner[]>(getProductsListByOrderIdUrl, {orderId}).pipe(
+  //     map((response: any[]) => {
+  //       const products = response.map((item) => new ShopItems(item.productId, item.name, item.shopId,item.category,item.review,item.rating,item.price));
+  //       return new ShopOrderListsOwner(orderId, response);
+  //     });
+  // }
+  getProductsListByOrderId(orderId: string): Observable<ShopOrderListsOwner> {
+    const getProductsListByOrderIdUrl = `http://localhost:3000/api/getProductsListByOrderId`;
+    return this.http.post<any>(getProductsListByOrderIdUrl, { orderId }).pipe(
+      map((response: any[]) => {
+        const products = response.map(
+          (item) =>
+            new ShopItems(
+              item.productId,
+              item.name,
+              item.shopId,
+              item.category,
+              item.review,
+              item.rating,
+              item.price
+            )
+        );
+        return new ShopOrderListsOwner(orderId, products);
+      })
+    );
+  }
+  // getProductsListByOrderId(orderId: string): Observable<any[]> {
+  //   console.log(orderId);
+  //   const getProductsListByOrderIdUrl = `http://localhost:3000/api/getProductsListByOrderId`;
+  //   return this.http.post<any[]>(getProductsListByOrderIdUrl, { orderId });
+  // }
   // async updateShopOrderStatus(orderId: string): Promise<ShopItems[]> {
   //   const getShopOrderStatus = `http://localhost:3000/api/updateShopOrderStatus/:${orderId}`;
   //   try {

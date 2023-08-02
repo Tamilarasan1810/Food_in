@@ -276,12 +276,41 @@ app.post("/api/updateShopOrderStatus", (req, res) => {
       res.status(200).json({ message: "Order status updated successfully" });
     }
   });
+
   // Return a success response
   //res.status(200).json({ message: "Order ID updated successfully" });
 });
 
 ////////^^^^^^^^^get shopSideOrderStatus
+/////////to return ProductsList By OrderId for the shop owner
 
+app.post("/api/getProductsListByOrderId", (req, res) => {
+  const orderId = req.body.orderId;
+  console.log("orderId: ", orderId);
+  // MySQL query to retrieve products based on orderId
+  const query = ` SELECT p.* FROM product p INNER JOIN allorders a ON p.productId = a.productId INNER JOIN orders o ON a.orderId = o.orderId WHERE o.orderId = \"${orderId}\"`;
+
+  connection.query(query, (err, result) => {
+    if (err) {
+      console.error("Error retrieving products:", err);
+      res.status(500).json({ error: "Error retrieving products" });
+    } else {
+      const products = result.map((item) => ({
+        productId: item.productId,
+        name: item.name,
+        shopId: item.shopId,
+        category: item.category,
+        review: item.review,
+        rating: item.rating,
+        price: item.price,
+      }));
+      console.log(products);
+      res.status(200).json(products);
+    }
+  });
+});
+
+////////^^^^^^^^to return productsList by OrderId for the shop owner
 // function test() {
 //   const query = "SELECT * FROM shops";
 

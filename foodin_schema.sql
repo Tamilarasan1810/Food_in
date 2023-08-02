@@ -48,11 +48,19 @@ SELECT MAX(orderId) FROM orders;
 SELECT CONCAT('O', LPAD(MAX(CAST(SUBSTRING(orderId, 2) AS UNSIGNED)) + 1, 4, '0')) AS new_value FROM orders;
 SELECT * FROM orders;
 SELECT * FROM allorders;
+SELECT * FROM product;
 /*INSERT INTO orders (orderId, shopId, userId, dateTime)VALUES("O0001","S0001","U0001",NOW());*/
 /*ALTER TABLE orders ADD orderStatus integer;*/
+
+SELECT p.productId, p.name, p.price
+FROM product p
+INNER JOIN allorders a ON p.productId = a.productId
+INNER JOIN orders o ON a.orderId = o.orderId
+WHERE o.orderId = 'O0004';/*This query is to select the products based on the orderId -- It returns all the products that is selected on a single orderId*/
+
 /*INSERT INTO allorders(orderId,productId,qty,price)VALUES("O0002","P0001",1,160);*/
-delete from orders where orderId>="O0002";
-delete from allorders where orderId>="O0002";
+DELETE from orders where orderId>="O0002";
+DELETE from allorders where orderId>="O0002";
 
 /*SELECT * FROM orders WHERE userId = "U0001";*/
 

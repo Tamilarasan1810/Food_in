@@ -1,17 +1,17 @@
 <h2>Order Status</h2>
-<table border="1">
+<!-- <table border="1" class="table">
   <tr>
-    <th>OrderId</th>
-    <th>ShopId</th>
-    <th>userId</th>
-    <th>orderStatus</th>
-    <th>dateTime</th>
+    <th class="th">OrderId</th>
+    <th class="th">ShopId</th>
+    <th class="th">userId</th>
+    <th class="th">orderStatus</th>
+    <th class="th">dateTime</th>
   </tr>
-  <tr *ngFor="let order of shopSideOrderStatus">
+  <tr *ngFor="let order of shopSideOrderStatus" class="tr">
     <td>{{ order.orderId }}</td>
     <td>{{ order.shopId }}</td>
     <td>{{ order.userId }}</td>
-    <!-- <td>{{ order.orderStatus }}</td> -->
+    
     <td
       *ngIf="order.orderStatus == 0"
       style="background-color: rgb(247, 139, 139)"
@@ -45,19 +45,175 @@
         Reject Order
       </button>
     </td>
-
-    <!-- <td>
-      <button
-        class="btn btn-primary"
-        (click)="addToCart(item.productId, item.price, item.shopId)"
-      >
-        Add to Cart
+    <td>
+      <button class="btn btn-warning" (click)="getOrderProducts(order.orderId)">
+        See Products
       </button>
-    </td> -->
+    </td>
+
+   
   </tr>
 </table>
-<hr />
+
+<table border="1">
+  <tr>
+    <th>ProductId</th>
+    <th>name</th>
+    <th>category</th>
+    <th>price</th>
+  </tr>
+  <tr>
+    {{
+      ordersList.products[0].name
+    }}
+  </tr>
+</table>
+
+<hr /> -->
+
 <!-- <button class="btn btn-primary" (click)="getCartItems()">Get Cart Items</button>
 <ul *ngFor="let cart of cartItems">
   <li>{{ cart }}</li> 
 </ul>-->
+
+<!-- 
+<div class="card mb-3" *ngFor="let order of shopSideOrderStatus">
+  <div class="card-header">
+    <h5 class="card-title">Order Details</h5>
+  </div>
+  <div class="card-body">
+    <p class="card-text">
+      <strong>Order ID:</strong> {{ order.orderId }}<br />
+      <strong>Shop ID:</strong> {{ order.shopId }}<br />
+      <strong>User ID:</strong> {{ order.userId }}<br />
+      <strong>Order Status:</strong> {{ order.orderStatus }}<br />
+      <strong>Date/Time:</strong> {{ order.dateTime }}
+    </p>
+    <button
+      (click)="toggleProducts()"
+      (click)="getOrderProducts(order.orderId)"
+      class="btn btn-primary"
+    >
+      Expand
+    </button>
+
+    <div *ngIf="showProducts && order.orderId == ordersList.orderId">
+      <table class="table table-bordered mt-3">
+        <thead>
+          <tr>
+            <th>Product ID</th>
+            <th>Name</th>
+            <th>Category</th>
+            <th>Price</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let product of ordersList.products">
+            <td>{{ product.productId }}</td>
+            <td>{{ product.name }}</td>
+            <td>{{ product.category }}</td>
+            <td>{{ product.price }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div> -->
+
+<!--  -->
+<!--  -->
+
+<div class="card mb-3" *ngFor="let order of shopSideOrderStatus">
+  <div class="card-header">
+    <h5 class="card-title">
+      <table border="0" class="exp">
+        <tr class="exp-tr">
+          <td>{{ order.orderId }}</td>
+          <td>{{ order.shopId }}</td>
+          <td>{{ order.userId }}</td>
+          <td
+            class="btn"
+            *ngIf="order.orderStatus == 0"
+            style="background-color: rgb(247, 139, 139)"
+          >
+            Order Not Accepted
+          </td>
+          <td
+            class="btn"
+            *ngIf="order.orderStatus == 1"
+            style="background-color: rgb(113, 223, 124)"
+          >
+            Order Accepted
+          </td>
+          <td>{{ order.dateTime }}</td>
+          <td *ngIf="order.orderStatus == 0">
+            <button
+              class="btn btn-success"
+              (click)="
+                updateOrderStatus(
+                  order.orderId,
+                  order.userId,
+                  order.orderStatus
+                )
+              "
+            >
+              Accept Order
+            </button>
+          </td>
+          <td *ngIf="order.orderStatus == 1">
+            <button
+              class="btn btn-danger"
+              (click)="
+                updateOrderStatus(
+                  order.orderId,
+                  order.userId,
+                  order.orderStatus
+                )
+              "
+            >
+              Reject Order
+            </button>
+          </td>
+          <td>
+            <button
+              (click)="toggleProducts()"
+              (click)="getOrderProducts(order.orderId)"
+              class="btn btn-warning"
+            >
+              See Products
+            </button>
+          </td>
+        </tr>
+      </table>
+    </h5>
+  </div>
+  <div
+    class="card-body"
+    *ngIf="showProducts && order.orderId == ordersList.orderId"
+  >
+    <!-- Products table will be shown here if expanded -->
+    <div>
+      <table class="table table-bordered mt-3">
+        <thead>
+          <tr>
+            <th>Product ID</th>
+            <th>Name</th>
+            <th>Category</th>
+            <th>Price</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let product of ordersList.products">
+            <td>{{ product.productId }}</td>
+            <td>{{ product.name }}</td>
+            <td>{{ product.category }}</td>
+            <td>{{ product.price }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!--  -->
+<!--  -->

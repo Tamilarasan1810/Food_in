@@ -68,7 +68,7 @@ DELETE from allorders where orderId>="O0002";
 /*SELECT * FROM orders;*/
 
 INSERT INTO users (userId, name, mobileNo, password) VALUES ("U0005","chicken",7234548791,"chickenWay");
-SELECT * FROM users;
+	SELECT * FROM users;
 INSERT INTO users (userId, name, mobileNo, password) VALUES ("U0004","chicken",723548796,"chickenWay");
 
 ALTER TABLE users  MODIFY mobileNo INT(11) ;

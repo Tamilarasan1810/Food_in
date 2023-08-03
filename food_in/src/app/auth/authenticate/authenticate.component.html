@@ -1,3 +1,100 @@
-<button class="btn btn-success" (click)="signIn()">SignUp</button>
+<!-- <button class="btn btn-success" (click)="signIn()">SignUp</button>
 <br />
-<button class="btn btn-success" (click)="logIn()">LogIn</button>
+<button class="btn btn-success" (click)="logIn()">LogIn</button> -->
+
+<div class="login-form" *ngIf="!showSignUpForm">
+  <h2>Login</h2>
+  <p style="color: red" *ngIf="invalidLoginId">
+    * Invalid Username or Password
+  </p>
+  <form #userLoginForm="ngForm" (ngSubmit)="userLogin(userLoginForm)">
+    <input
+      type="text"
+      placeholder="User Name"
+      required
+      ngModel
+      name="username"
+      #username="ngModel"
+      required
+    />
+    <input
+      type="password"
+      placeholder="Password"
+      ngModel
+      name="password"
+      #password="ngModel"
+      required
+    />
+    <button class="btn btn-primary">Login</button>
+  </form>
+  <br />
+  <p (click)="showSignUp()">Sign Up</p>
+</div>
+
+<div class="signup-form" *ngIf="showSignUpForm">
+  <h2>Sign Up</h2>
+  <form #userSignUpForm="ngForm" (ngSubmit)="userSignIn(userSignUpForm)">
+    <input
+      type="text"
+      name="username"
+      placeholder="User Name"
+      ngModel
+      required
+      #username="ngModel"
+    />
+    <input
+      type="password"
+      name="password"
+      placeholder="password"
+      ngModel
+      required
+      #password="ngModel"
+    />
+    <input
+      type="tel"
+      name="mobileNumber"
+      placeholder="Mobile Number"
+      ngModel
+      required
+      #mobileNumber="ngModel"
+    />
+    <button class="btn btn-primary">Sign Up</button>
+  </form>
+  <br />
+  <p (click)="showSignUp()">Login</p>
+</div>
+
+<!-- <div class="signup-form" *ngIf="showSignUpForm">
+  <h2>Sign Up</h2>
+  <form>
+    <input
+      type="text"
+      name="username"
+      placeholder="Username"
+      #username
+      required
+    />
+    <input
+      type="password"
+      name="password"
+      placeholder="Password"
+      #password
+      required
+    />
+    <input
+      type="tel"
+      name="mobileNubmer"
+      placeholder="Mobile Number"
+      #mobileNumber
+      required
+    />
+
+    <button
+      (submit)="userSignUp(username.value, password.value, mobileNumber.value)"(keydown.enter)="$event.preventDefault()"
+    >
+      Sign Up
+    </button>
+  </form>
+  <br />
+  <p (click)="showSignUp()">Login</p>
+</div> -->

@@ -32,24 +32,37 @@ export class UserAuthenticationService {
     //const encUserName = this.encryptUserData(username, 'your-secret-key');
     const encUserPassword = this.encryptUserData(password, 'MySecretKey');
     const userDetails = { username, encUserPassword };
-    console.log(userDetails);
-    this.http
-      .post<any>(loginInUrl, { data: userDetails })
-      .subscribe((response) => {
-        console.log(response);
-      });
+    //console.log(userDetails);
+    return this.http.post<any>(loginInUrl, { data: userDetails });
   }
   userSignUp(username: string, password: string, mobileNumber: number) {
     const signUpUrl = `http://localhost:3000/api/signIn`;
     const encUserPassword = this.encryptUserData(password, 'MySecretKey');
     const userDetails = { username, encUserPassword, mobileNumber };
-    console.log(userDetails);
-    this.http
-      .post<any>(signUpUrl, { data: userDetails })
-      .subscribe((response) => {
-        console.log(response);
-      });
+    // console.log(userDetails);
+    return this.http.post<any>(signUpUrl, { data: userDetails });
   }
+
+  isLoggedIn(): boolean {
+    const userCredentials = sessionStorage.getItem('userCredentials');
+    if (userCredentials) {
+      const credentials = JSON.parse(userCredentials);
+      const currentTime = new Date().getTime();
+      const sessionExpiry = credentials.sessionExpiry;
+      if (currentTime < sessionExpiry) {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  saveUserCredentials(username: string, sessionDuration: number): void {
+    const currentTime = new Date().getTime();
+    const sessionExpiry = currentTime + sessionDuration;
+    const credentials = { username, sessionExpiry };
+    sessionStorage.setItem('userCredentials', JSON.stringify(credentials));
+  }
+
   // userSignUp(username: string, password: string, mobileNumber: number) {
   //   const userDetails = { username, password, mobileNumber };
   //   const encryptedData = this.encryptUserData(userDetails, 'your-secret-key');

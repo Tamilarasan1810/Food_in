@@ -320,7 +320,7 @@ app.post("/api/signIn", (req, res) => {
   // const userDetails = req.body.userDetails;
   // console.log(userDetails);
   const data = req.body.data;
-  console.log(data);
+  //console.log(data);
 
   // const encryptedData = req.body.data;
   const secretKey = "MySecretKey";
@@ -338,7 +338,7 @@ app.post("/api/signIn", (req, res) => {
       return;
     }
     const maxUserId = result[0].maxUserId || 0; // If no rows, initialize to 0
-    console.log("maxUserId: ", maxUserId);
+    //console.log("maxUserId: ", maxUserId);
     // console.log("Max orderId: ", maxUserId);
     newUserId = `U${String(maxUserId + 1).padStart(4, "0")}`;
     this.finalUserId = newUserId;
@@ -357,7 +357,8 @@ app.post("/api/signIn", (req, res) => {
         console.error("Error in signIn user to db: ", err);
         res.status(500).json({ error: "Error signing in user" });
       } else {
-        res.status(200).json({ message: "User Signed in Successfully" });
+        console.log(newUserId);
+        res.status(200).json({ userId: newUserId, status: "yes" });
       }
     });
   });
@@ -402,7 +403,8 @@ app.post("/api/logIn", (req, res) => {
       // console.log("login result: ", result);
       if (result[0]) {
         console.log(result[0].userId);
-        res.status(200).json(result[0]);
+
+        res.status(200).json({ userId: result[0].userId, status: "yes" });
       } else {
         console.log("no invalid username or password");
         res.status(200).json({ message: "no invalid username or password" });

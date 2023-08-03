@@ -15,6 +15,7 @@ import { ShopItemsComponent } from './shop-items/shop-items.component';
 import { RouterModule } from '@angular/router';
 import { ShopOrderOwnerComponent } from './shop-order-owner/shop-order-owner.component';
 import { AuthenticateComponent } from './auth/authenticate/authenticate.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -30,7 +31,14 @@ import { AuthenticateComponent } from './auth/authenticate/authenticate.componen
     ShopOrderOwnerComponent,
     AuthenticateComponent,
   ],
-  imports: [BrowserModule, AppRoutingModule, HttpClientModule, RouterModule],
+  imports: [
+    BrowserModule,
+    AppRoutingModule,
+    HttpClientModule,
+    FormsModule,
+    RouterModule,
+    ReactiveFormsModule,
+  ],
   providers: [],
   bootstrap: [AppComponent],
 })

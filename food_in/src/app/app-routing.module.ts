@@ -5,6 +5,7 @@ import { ShopItemsComponent } from './shop-items/shop-items.component';
 import { CartComponent } from './cart/cart.component';
 import { MyOrderStatusComponent } from './my-order-status/my-order-status.component';
 import { ShopOrderOwnerComponent } from './shop-order-owner/shop-order-owner.component';
+import { AuthenticateComponent } from './auth/authenticate/authenticate.component';
 
 const routes: Routes = [
   { path: '', component: DashboardComponent },
@@ -12,6 +13,7 @@ const routes: Routes = [
   { path: 'cart', component: CartComponent },
   { path: 'myOrders', component: MyOrderStatusComponent },
   { path: 'shopOrders', component: ShopOrderOwnerComponent },
+  { path: 'authenticate', component: AuthenticateComponent },
 ];
 
 @NgModule({

@@ -14,6 +14,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { ShopItemsComponent } from './shop-items/shop-items.component';
 import { RouterModule } from '@angular/router';
 import { ShopOrderOwnerComponent } from './shop-order-owner/shop-order-owner.component';
+import { AuthenticateComponent } from './auth/authenticate/authenticate.component';
 
 @NgModule({
   declarations: [
@@ -27,6 +28,7 @@ import { ShopOrderOwnerComponent } from './shop-order-owner/shop-order-owner.com
     ReviewComponent,
     ShopItemsComponent,
     ShopOrderOwnerComponent,
+    AuthenticateComponent,
   ],
   imports: [BrowserModule, AppRoutingModule, HttpClientModule, RouterModule],
   providers: [],

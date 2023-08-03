@@ -2,6 +2,7 @@ const express = require("express");
 const mysql = require("mysql2");
 const cors = require("cors");
 const bodyParser = require("body-parser");
+const CryptoJs = require("crypto-js");
 
 const app = express();
 const port = 3000;
@@ -304,13 +305,117 @@ app.post("/api/getProductsListByOrderId", (req, res) => {
         rating: item.rating,
         price: item.price,
       }));
-      console.log(products);
+      // console.log(products);
       res.status(200).json(products);
     }
   });
 });
 
 ////////^^^^^^^^to return productsList by OrderId for the shop owner
+
+////For User Authentication
+
+//User sign in
+app.post("/api/signIn", (req, res) => {
+  // const userDetails = req.body.userDetails;
+  // console.log(userDetails);
+  const data = req.body.data;
+  console.log(data);
+
+  // const encryptedData = req.body.data;
+  const secretKey = "MySecretKey";
+  const bytes = CryptoJs.AES.decrypt(data.encUserPassword, secretKey);
+  const userPassword = JSON.parse(bytes.toString(CryptoJs.enc.Utf8));
+  //
+
+  const finalUserId = "";
+  const getMaxUserIdQuery =
+    "SELECT MAX(CAST(SUBSTRING(userId, 2) AS UNSIGNED)) AS maxUserId FROM users";
+  connection.query(getMaxUserIdQuery, (err, result) => {
+    if (err) {
+      console.error("Error retrieving maxUserId:", err);
+      res.status(500).send("Error retrieving maxUserId");
+      return;
+    }
+    const maxUserId = result[0].maxUserId || 0; // If no rows, initialize to 0
+    console.log("maxUserId: ", maxUserId);
+    // console.log("Max orderId: ", maxUserId);
+    newUserId = `U${String(maxUserId + 1).padStart(4, "0")}`;
+    this.finalUserId = newUserId;
+    // console.log(
+    //   "New order id generated from function:: ",
+    //   newUserId,
+    //   data.username,
+    //   data.mobileNumber,
+    //   userPassword
+    // );
+
+    //
+    const signInQuery = `INSERT INTO users (userId, name, mobileNo, password) VALUES (\"${newUserId}\",\"${data.username}\",${data.mobileNumber},\"${userPassword}\")`;
+    connection.query(signInQuery, (err, result) => {
+      if (err) {
+        console.error("Error in signIn user to db: ", err);
+        res.status(500).json({ error: "Error signing in user" });
+      } else {
+        res.status(200).json({ message: "User Signed in Successfully" });
+      }
+    });
+  });
+
+  //^^ for getting new userId
+  // const query = `INSERT INTO users (userId, name, mobileNo, password) VALUES ("U0003",\"${data.username}\",${data.mobileNumber},\"${userPassword}\");`;
+
+  // console.log("orderId: ", orderId, " status: ", status);
+  // Perform database update operation to update orderId
+  //const query = `UPDATE orders SET orderStatus= \"${status}\" WHERE orderId=\"${orderId}\"`;
+  // connection.query(query, (err, result) => {
+  //   if (err) {
+  //     console.error("Error updating order status:", err);
+  //     res.status(500).json({ error: "Error updating order status" });
+  //   } else {
+  //     res.status(200).json({ message: "Order status updated successfully" });
+  //   }
+  // });
+
+  // Return a success response
+  // res.status(200).json({ message: "Order ID updated successfully" });
+});
+//^^^^^^^^^ User sign in
+
+//User log In
+app.post("/api/logIn", (req, res) => {
+  // const userDetails = req.body.userDetails;
+  // console.log(userDetails);
+  const data = req.body.data;
+  // console.log(data);
+  const secretKey = "MySecretKey";
+  const bytes = CryptoJs.AES.decrypt(data.encUserPassword, secretKey);
+  const userPassword = JSON.parse(bytes.toString(CryptoJs.enc.Utf8));
+
+  // Perform database update operation to update orderId
+  const userLoginQuery = `select userId from users where name=\"${data.username}\"and password=\"${userPassword}\"`;
+  connection.query(userLoginQuery, (err, result) => {
+    if (err) {
+      console.error("Error updating order status:", err);
+      res.status(500).json({ error: "Error updating order status" });
+    } else {
+      // console.log("login result: ", result);
+      if (result[0]) {
+        console.log(result[0].userId);
+        res.status(200).json(result[0]);
+      } else {
+        console.log("no invalid username or password");
+        res.status(200).json({ message: "no invalid username or password" });
+      }
+    }
+  });
+
+  // Return a success response
+  // res.status(200).json({ message: "Order ID updated successfully" });
+});
+//^^^^^^^^^ User log In
+
+///^^^^^^^^ for userAuthentication
 // function test() {
 //   const query = "SELECT * FROM shops";
 

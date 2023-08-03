@@ -67,4 +67,14 @@ DELETE from allorders where orderId>="O0002";
 /*UPDATE orders SET orderStatus=0 where orderId='O0001';*/
 /*SELECT * FROM orders;*/
 
+INSERT INTO users (userId, name, mobileNo, password) VALUES ("U0005","chicken",7234548791,"chickenWay");
+SELECT * FROM users;
+INSERT INTO users (userId, name, mobileNo, password) VALUES ("U0004","chicken",723548796,"chickenWay");
+
+ALTER TABLE users  MODIFY mobileNo INT(11) ;
+UPDATE users SET mobileNo=7904304879 where userId>="U0001";
+
+ALTER TABLE users MODIFY mobileNo BIGINT(10);
+
+select userId from users where name="tamil"and password="king";
 

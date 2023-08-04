@@ -61,6 +61,7 @@ WHERE o.orderId = 'O0004';/*This query is to select the products based on the or
 /*INSERT INTO allorders(orderId,productId,qty,price)VALUES("O0002","P0001",1,160);*/
 DELETE from orders where orderId>="O0002";
 DELETE from allorders where orderId>="O0002";
+DELETE from users where userId>"U0001";
 
 /*SELECT * FROM orders WHERE userId = "U0001";*/
 
@@ -68,7 +69,7 @@ DELETE from allorders where orderId>="O0002";
 /*SELECT * FROM orders;*/
 
 INSERT INTO users (userId, name, mobileNo, password) VALUES ("U0005","chicken",7234548791,"chickenWay");
-	SELECT * FROM users;
+SELECT * FROM users;
 INSERT INTO users (userId, name, mobileNo, password) VALUES ("U0004","chicken",723548796,"chickenWay");
 
 ALTER TABLE users  MODIFY mobileNo INT(11) ;

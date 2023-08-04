@@ -104,6 +104,8 @@ app.post("/api/orders", (req, res) => {
 app.post("/api/updateAllOrders", async (req, res) => {
   //
   const cartItems = req.body.items;
+  // const user = req.body.userId;
+  // console.log("userId : ", user);
   console.log("Cart Items :: ", cartItems);
   ///
   //for creating new order id
@@ -420,15 +422,12 @@ app.post("/api/signIn", (req, res) => {
 
 const SECRET_KEY = "MYSERVERSECRETKEY";
 
-// expressJwt({ secret: SECRET_KEY, algorithms: ["HS256"] });
-// app.use(
-//   session({
-//     secret: SECRET_KEY,
-//     resave: false,
-//     saveUninitialized: true,
-//     cookie: { secure: false },
-//   })
-// );
+function generateToken(userId, username) {
+  const payload = { userId: userId, username: username };
+  const options = { expiresIn: "24h" };
+  const token = jwt.sign(payload, SECRET_KEY, options);
+  return token;
+}
 
 app.post("/api/logIn", (req, res) => {
   const data = req.body.data;
@@ -446,12 +445,17 @@ app.post("/api/logIn", (req, res) => {
         console.log(result[0].userId);
         // for token
         const userId = result[0].userId;
-        const token = jwt.sign({ userId }, SECRET_KEY, { expiresIn: "24h" });
+        // const token = jwt.sign({ userId }, SECRET_KEY, { expiresIn: "24h" });
+        console.log("username: ", data.username);
+        const token = generateToken({
+          userId: userId,
+          username: data.username,
+        });
         res
           .status(200)
           .json({ token: token, userId: result[0].userId, status: "yes" });
-        //^^^^ for token
-        //res.status(200).json({ userId: result[0].userId, status: "yes" });
+        // ^^^^ for token
+        // res.status(200).json({ userId: result[0].userId, status: "yes" });
       } else {
         console.log("no invalid username or password");
         res.status(200).json({ message: "no invalid username or password" });
@@ -477,6 +481,7 @@ app.post("/api/logIn", (req, res) => {
 // );
 
 ////^^^^^^^^^^ the above code is for server side token management
+
 // function test() {
 //   const query = "SELECT * FROM shops";
 

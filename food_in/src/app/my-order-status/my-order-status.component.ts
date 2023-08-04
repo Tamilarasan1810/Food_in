@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { FoodServicesService } from '../food-services.service';
+import { UserAuthenticationService } from '../user-authentication.service';
 
 @Component({
   selector: 'app-my-order-status',
@@ -7,10 +8,21 @@ import { FoodServicesService } from '../food-services.service';
   styleUrls: ['./my-order-status.component.css'],
 })
 export class MyOrderStatusComponent {
-  constructor(private foodServices: FoodServicesService) {}
+  constructor(
+    private foodServices: FoodServicesService,
+    private userAuth: UserAuthenticationService
+  ) {}
   orderStatus: any;
 
+  userDetails: any;
   ngOnInit() {
+    // this.userDetails = this.userAuth.getUserDetails();
+    // this.userAuth.userDetailsChanged.subscribe((response) => {
+    //   this.userDetails = response;
+    // });
+    // this.orderStatus = this.foodServices.getOrderStatus(
+    //   this.orderStatus.userId
+    // );
     this.orderStatus = this.foodServices.getOrderStatus('U0001');
     this.foodServices.orderStatusChanged.subscribe((data: any) => {
       this.orderStatus = data;

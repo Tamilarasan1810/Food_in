@@ -7,13 +7,24 @@ import { CartItems } from './models/cart-items';
 import { ShopOrderListsOwner } from './models/shop-order-lists-owner';
 
 import { map } from 'rxjs/operators';
+import { UserAuthenticationService } from './user-authentication.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class FoodServicesService {
-  constructor(private http: HttpClient) {}
+  constructor(
+    private http: HttpClient,
+    private userAuth: UserAuthenticationService
+  ) {}
 
+  userDetails: any;
+  ngOnInit() {
+    // this.userDetails = this.userAuth.getUserDetails();
+    // this.userAuth.userDetailsChanged.subscribe((response) => {
+    //   this.userDetails = response;
+    // });
+  }
   private shops: Shops[] = [];
 
   data: any;
@@ -97,8 +108,12 @@ export class FoodServicesService {
   //   //console.log(response);
   // }
   updateAllOrders(): Observable<any> {
+    // console.log('update all Orders: ', this.userDetails);
     const items = this.cartItems;
+    // const userId = this.userDetails.userId;
     this.cartItems = [];
+    // console.log('userId: ', userId);
+
     return this.http.post<any>(this.updateOrdersUrl, { items });
   }
   //orderStatus

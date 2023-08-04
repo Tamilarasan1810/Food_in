@@ -76,6 +76,28 @@ export class AuthenticateComponent {
           console.log('auth component ts: ', response);
           if (response.status == 'yes') {
             console.log('sessions login ');
+            this.userAuth
+              .userLoginIn(
+                userSignUpForm.value.username,
+                userSignUpForm.value.password
+              )
+              .subscribe(
+                (response) => {
+                  if (response.status == 'yes') {
+                    this.invalidLoginId = false;
+                    this.userAuth.saveUserCredentials(
+                      userSignUpForm.value.username,
+                      8400000
+                    );
+                    this.router.navigate(['']);
+                  } else {
+                    this.invalidLoginId = true;
+                  }
+                },
+                (error) => {
+                  console.log('invalid username or password');
+                }
+              );
             // this.router.navigate(['']);
           } else {
             // this.invalidLoginId = true;

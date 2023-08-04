@@ -9,6 +9,14 @@ import { UserAuthenticationService } from '../user-authentication.service';
 export class HeaderComponent {
   @Output() featureSelected = new EventEmitter<string>();
 
+  userDetails: any;
+  ngOnInit() {
+    // this.userDetails = this.userAuth.getUserDetails();
+    // this.userAuth.userDetailsChanged.subscribe((response) => {
+    //   this.userDetails = response;
+    // });
+  }
+
   onSelect(feature: string) {
     this.featureSelected.emit(feature);
   }

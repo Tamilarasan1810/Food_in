@@ -1,10 +1,10 @@
 import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { EventEmitter, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import * as CryptoJS from 'crypto-js';
 import { map } from 'rxjs/operators';
 import jwt_decode from 'jwt-decode';
-// const jwt = require("jsonwebtoken");
+import { Jwt, decode } from 'jsonwebtoken';
 
 @Injectable({
   providedIn: 'root',
@@ -22,6 +22,13 @@ export class UserAuthenticationService {
   // }
 
   //
+  // username: any;
+  // userId: any;
+  // userDetailsChanged = new EventEmitter<any>();
+  // getUserDetails() {
+  //   const userDetails = { username: this.username, userId: this.userId };
+  //   return userDetails;
+  // }
 
   encryptUserData(data: any, secretKey: string): string {
     const encryptedData = CryptoJS.AES.encrypt(
@@ -68,6 +75,39 @@ export class UserAuthenticationService {
   //////// the below code is for implementing tokens
 
   private readonly SESSION_STORAGE_KEY = 'MySecretSessionStorageKey';
+  SECRET_KEY = 'MYSERVERSECRETKEY';
+  // user data token
+  getUserDetailsFromToken(): { userId: string; username: string } | null {
+    const token = this.getToken();
+    if (token) {
+      try {
+        const decodedToken: any = jwt_decode(token);
+        // console.log('userId: ', decodedToken.userId.username);
+
+        // this.userId = decodedToken.userId.userId;
+        // this.username = decodedToken.userId.username;
+
+        // const userDetails = { userId: this.userId, username: this.username };
+        // this.userDetailsChanged.emit(userDetails);
+
+        // console.log(
+        //   'User Iddddd : ',
+        //   decodedToken.userId.userId,
+        //   decodedToken.userId.username
+        // );
+        return {
+          userId: decodedToken.userId.userId,
+          username: decodedToken.userId.username,
+        };
+      } catch (error) {
+        console.error('Error decoding token:', error);
+        return null;
+      }
+    }
+    return null;
+  }
+
+  //---^^^--- user data token
 
   private saveToken(token: string): void {
     localStorage.setItem(this.SESSION_STORAGE_KEY, token);
@@ -85,7 +125,7 @@ export class UserAuthenticationService {
     const userDetails = { username, encUserPassword };
     return this.http.post<any>(loginInUrl, { data: userDetails }).pipe(
       map((response) => {
-        console.log('auth service ts: ', response.userId);
+        // console.log('auth service ts: ', response);
         if (response.token) {
           this.saveToken(response.token);
         }
@@ -98,6 +138,7 @@ export class UserAuthenticationService {
   }
   isLoggedIn(): boolean {
     const token = this.getToken();
+    this.getUserDetailsFromToken(); //
     return !!token && !this.isTokenExpired(token);
   }
 

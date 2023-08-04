@@ -23,7 +23,12 @@ export class MyOrderStatusComponent {
     // this.orderStatus = this.foodServices.getOrderStatus(
     //   this.orderStatus.userId
     // );
-    this.orderStatus = this.foodServices.getOrderStatus('U0001');
+    this.userDetails = this.userAuth.LoggedUserDetails;
+    // console.log(this.userDetails.userId);
+    // this.orderStatus = this.foodServices.getOrderStatus('U0001');
+    this.orderStatus = this.foodServices.getOrderStatus(
+      this.userDetails.userId
+    );
     this.foodServices.orderStatusChanged.subscribe((data: any) => {
       this.orderStatus = data;
     });

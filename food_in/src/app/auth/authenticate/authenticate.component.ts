@@ -73,9 +73,9 @@ export class AuthenticateComponent {
       )
       .subscribe(
         (response) => {
-          console.log('auth component ts: ', response);
+          // console.log('auth component ts: ', response);
           if (response.status == 'yes') {
-            console.log('sessions login ');
+            // console.log('sessions login ');
             this.userAuth
               .userLoginIn(
                 userSignUpForm.value.username,

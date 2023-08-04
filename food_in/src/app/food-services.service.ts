@@ -24,6 +24,8 @@ export class FoodServicesService {
     // this.userAuth.userDetailsChanged.subscribe((response) => {
     //   this.userDetails = response;
     // });
+    this.userDetails = this.userAuth.LoggedUserDetails;
+    this.userAuth.LoggedUserDetailsChanged.subscribe((response) => {});
   }
   private shops: Shops[] = [];
 
@@ -108,13 +110,13 @@ export class FoodServicesService {
   //   //console.log(response);
   // }
   updateAllOrders(): Observable<any> {
-    // console.log('update all Orders: ', this.userDetails);
+    const userId = this.userAuth.LoggedUserDetails.userId;
     const items = this.cartItems;
     // const userId = this.userDetails.userId;
     this.cartItems = [];
     // console.log('userId: ', userId);
 
-    return this.http.post<any>(this.updateOrdersUrl, { items });
+    return this.http.post<any>(this.updateOrdersUrl, { items, userId });
   }
   //orderStatus
   orderStatus: any;

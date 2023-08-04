@@ -22,13 +22,15 @@ export class UserAuthenticationService {
   // }
 
   //
-  // username: any;
-  // userId: any;
-  // userDetailsChanged = new EventEmitter<any>();
-  // getUserDetails() {
-  //   const userDetails = { username: this.username, userId: this.userId };
-  //   return userDetails;
-  // }
+  username = '';
+  userId = '';
+  LoggedUserDetails = { username: this.username, userId: this.userId };
+  LoggedUserDetailsChanged = new EventEmitter<any>();
+  userDetailsChanged = new EventEmitter<any>();
+  getUserDetails() {
+    const userDetails = { username: this.username, userId: this.userId };
+    return userDetails;
+  }
 
   encryptUserData(data: any, secretKey: string): string {
     const encryptedData = CryptoJS.AES.encrypt(
@@ -84,11 +86,16 @@ export class UserAuthenticationService {
         const decodedToken: any = jwt_decode(token);
         // console.log('userId: ', decodedToken.userId.username);
 
-        // this.userId = decodedToken.userId.userId;
-        // this.username = decodedToken.userId.username;
-
-        // const userDetails = { userId: this.userId, username: this.username };
-        // this.userDetailsChanged.emit(userDetails);
+        this.userId = decodedToken.userId.userId;
+        this.username = decodedToken.userId.username;
+        // console.log('User Details: ', this.userId, this.username);
+        this.LoggedUserDetails = {
+          username: this.username,
+          userId: this.userId,
+        };
+        this.LoggedUserDetailsChanged.emit(this.LoggedUserDetails); // emit loggedUserDetailsChanged data
+        const userDetails = { userId: this.userId, username: this.username };
+        this.userDetailsChanged.emit(userDetails);
 
         // console.log(
         //   'User Iddddd : ',

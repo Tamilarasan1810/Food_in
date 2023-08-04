@@ -104,9 +104,9 @@ app.post("/api/orders", (req, res) => {
 app.post("/api/updateAllOrders", async (req, res) => {
   //
   const cartItems = req.body.items;
-  // const user = req.body.userId;
-  // console.log("userId : ", user);
-  console.log("Cart Items :: ", cartItems);
+  const userId = req.body.userId;
+  // console.log("userIdd : ", user);
+  //console.log("Cart Items :: ", cartItems);
   ///
   //for creating new order id
   //console.log("test test test: ", getNewOrderId());
@@ -134,7 +134,7 @@ app.post("/api/updateAllOrders", async (req, res) => {
     // console.log("Max orderId: ", maxOrderId);
     newOrderId = `O${String(maxOrderId + 1).padStart(4, "0")}`;
     this.finalOrderId = newOrderId;
-    console.log("New order id generated from function:: ", newOrderId);
+    // console.log("New order id generated from function:: ", newOrderId);
     // console.log(
     //   "New order id generated:: ",
     //   newOrderId,
@@ -144,7 +144,8 @@ app.post("/api/updateAllOrders", async (req, res) => {
     const cartItemShopId = cartItems[0].shopId;
     // console.log("ShopId : ", cartItemShopId);
     // Step 3: Insert the new data with the new orderId into the orders table
-    const insertOrderQuery = `INSERT INTO orders (orderId, shopId, userId, dateTime,orderStatus) VALUES (\"${newOrderId}\",\"${cartItemShopId}\", 'U0001', NOW(),0)`;
+    // const insertOrderQuery = `INSERT INTO orders (orderId, shopId, userId, dateTime,orderStatus) VALUES (\"${newOrderId}\",\"${cartItemShopId}\", 'U0001', NOW(),0)`;
+    const insertOrderQuery = `INSERT INTO orders (orderId, shopId, userId, dateTime,orderStatus) VALUES (\"${newOrderId}\",\"${cartItemShopId}\", \"${userId}\", NOW(),0)`;
 
     connection.query(insertOrderQuery, (err, result) => {
       // if (err) {
@@ -166,7 +167,7 @@ app.post("/api/updateAllOrders", async (req, res) => {
               console.error("Error inserting into allorders:", err);
               reject(err);
             } else {
-              console.log("New order inserted:", result);
+              // console.log("New order inserted:", result);
               resolve(result);
             }
           });
@@ -201,7 +202,7 @@ app.post("/api/updateAllOrders", async (req, res) => {
   // const promises = await doSomething(cartItems);
   Promise.all(promises)
     .then(() => {
-      console.log("All orders inserted successfully");
+      // console.log("All orders inserted successfully");
       res.status(200).json({ message: "Orders inserted successfully" });
     })
     .catch((err) => {
@@ -442,11 +443,11 @@ app.post("/api/logIn", (req, res) => {
       res.status(500).json({ error: "Error updating order status" });
     } else {
       if (result[0]) {
-        console.log(result[0].userId);
+        //  console.log(result[0].userId);
         // for token
         const userId = result[0].userId;
         // const token = jwt.sign({ userId }, SECRET_KEY, { expiresIn: "24h" });
-        console.log("username: ", data.username);
+        // console.log("username: ", data.username);
         const token = generateToken({
           userId: userId,
           username: data.username,

@@ -75,7 +75,7 @@ export class ShopOrderOwnerComponent {
       (response) => {
         //console.log('Response from server:', response);
         this.ordersList = response;
-        console.log('Orders List: shop owner: ', this.ordersList);
+        // console.log('Orders List: shop owner: ', this.ordersList);
       },
       (error) => {
         console.error('Error from server:', error);

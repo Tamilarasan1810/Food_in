@@ -11,10 +11,10 @@ export class HeaderComponent {
 
   userDetails: any;
   ngOnInit() {
-    // this.userDetails = this.userAuth.getUserDetails();
-    // this.userAuth.userDetailsChanged.subscribe((response) => {
-    //   this.userDetails = response;
-    // });
+    this.userDetails = this.userAuth.getUserDetails();
+    this.userAuth.userDetailsChanged.subscribe((response) => {
+      this.userDetails = response;
+    });
   }
 
   onSelect(feature: string) {

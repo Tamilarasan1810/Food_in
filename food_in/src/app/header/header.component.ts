@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Output } from '@angular/core';
+import { UserAuthenticationService } from '../user-authentication.service';
 
 @Component({
   selector: 'app-header',
@@ -10,5 +11,11 @@ export class HeaderComponent {
 
   onSelect(feature: string) {
     this.featureSelected.emit(feature);
+  }
+
+  constructor(private userAuth: UserAuthenticationService) {}
+
+  logout() {
+    this.userAuth.userLogOut();
   }
 }

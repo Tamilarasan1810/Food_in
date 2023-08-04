@@ -73,8 +73,10 @@ export class AuthenticateComponent {
       )
       .subscribe(
         (response) => {
+          console.log('auth component ts: ', response);
           if (response.status == 'yes') {
-            this.router.navigate(['']);
+            console.log('sessions login ');
+            // this.router.navigate(['']);
           } else {
             // this.invalidLoginId = true;
             console.log('invalid Sign In');
@@ -86,6 +88,11 @@ export class AuthenticateComponent {
       );
   }
 
+  ngOnInit() {
+    if (this.userAuth.isLoggedIn()) {
+      this.router.navigate(['']);
+    }
+  }
   // signInUrl = 'http://localhost:3000/api/signIn';
   // signUpUrl = 'http://localhost:3000/api/signUp';
   // encryptUserData(data: any, secretKey: string): string {

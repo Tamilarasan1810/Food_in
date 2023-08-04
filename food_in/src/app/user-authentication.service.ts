@@ -2,6 +2,10 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import * as CryptoJS from 'crypto-js';
+import { map } from 'rxjs/operators';
+import jwt_decode from 'jwt-decode';
+// const jwt = require("jsonwebtoken");
+
 @Injectable({
   providedIn: 'root',
 })
@@ -27,14 +31,12 @@ export class UserAuthenticationService {
     return encryptedData;
   }
 
-  userLoginIn(username: string, password: string) {
-    const loginInUrl = `http://localhost:3000/api/logIn`;
-    //const encUserName = this.encryptUserData(username, 'your-secret-key');
-    const encUserPassword = this.encryptUserData(password, 'MySecretKey');
-    const userDetails = { username, encUserPassword };
-    //console.log(userDetails);
-    return this.http.post<any>(loginInUrl, { data: userDetails });
-  }
+  // userLoginIn(username: string, password: string) {          --------> userlogin for session
+  //   const loginInUrl = `http://localhost:3000/api/logIn`;
+  //   const encUserPassword = this.encryptUserData(password, 'MySecretKey');
+  //   const userDetails = { username, encUserPassword };
+  //   return this.http.post<any>(loginInUrl, { data: userDetails });
+  // }
   userSignUp(username: string, password: string, mobileNumber: number) {
     const signUpUrl = `http://localhost:3000/api/signIn`;
     const encUserPassword = this.encryptUserData(password, 'MySecretKey');
@@ -43,18 +45,18 @@ export class UserAuthenticationService {
     return this.http.post<any>(signUpUrl, { data: userDetails });
   }
 
-  isLoggedIn(): boolean {
-    const userCredentials = sessionStorage.getItem('userCredentials');
-    if (userCredentials) {
-      const credentials = JSON.parse(userCredentials);
-      const currentTime = new Date().getTime();
-      const sessionExpiry = credentials.sessionExpiry;
-      if (currentTime < sessionExpiry) {
-        return true;
-      }
-    }
-    return false;
-  }
+  // isLoggedIn(): boolean {   -------->for session storage
+  //   const userCredentials = sessionStorage.getItem('userCredentials');
+  //   if (userCredentials) {
+  //     const credentials = JSON.parse(userCredentials);
+  //     const currentTime = new Date().getTime();
+  //     const sessionExpiry = credentials.sessionExpiry;
+  //     if (currentTime < sessionExpiry) {
+  //       return true;
+  //     }
+  //   }
+  //   return false;
+  // }
 
   saveUserCredentials(username: string, sessionDuration: number): void {
     const currentTime = new Date().getTime();
@@ -62,6 +64,58 @@ export class UserAuthenticationService {
     const credentials = { username, sessionExpiry };
     sessionStorage.setItem('userCredentials', JSON.stringify(credentials));
   }
+
+  //////// the below code is for implementing tokens
+
+  private readonly SESSION_STORAGE_KEY = 'MySecretSessionStorageKey';
+
+  private saveToken(token: string): void {
+    localStorage.setItem(this.SESSION_STORAGE_KEY, token);
+  }
+  private getToken(): string | null {
+    return localStorage.getItem(this.SESSION_STORAGE_KEY);
+  }
+  private removeToken(): void {
+    localStorage.removeItem(this.SESSION_STORAGE_KEY);
+  }
+
+  userLoginIn(username: string, password: string) {
+    const loginInUrl = `http://localhost:3000/api/logIn`;
+    const encUserPassword = this.encryptUserData(password, 'MySecretKey');
+    const userDetails = { username, encUserPassword };
+    return this.http.post<any>(loginInUrl, { data: userDetails }).pipe(
+      map((response) => {
+        console.log('auth service ts: ', response.userId);
+        if (response.token) {
+          this.saveToken(response.token);
+        }
+        return response;
+      })
+    );
+  }
+  userLogOut(): void {
+    this.removeToken();
+  }
+  isLoggedIn(): boolean {
+    const token = this.getToken();
+    return !!token && !this.isTokenExpired(token);
+  }
+
+  isTokenExpired(token: string): boolean {
+    try {
+      const decodedToken: any = jwt_decode(token);
+      if (decodedToken.exp < Date.now() / 1000) {
+        this.userLogOut();
+        return true;
+      }
+      return false;
+    } catch (error) {
+      this.userLogOut();
+      return true;
+    }
+  }
+
+  //^^^^^^^^ the above code is for implementing tokens
 
   // userSignUp(username: string, password: string, mobileNumber: number) {
   //   const userDetails = { username, password, mobileNumber };

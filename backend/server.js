@@ -4,6 +4,10 @@ const cors = require("cors");
 const bodyParser = require("body-parser");
 const CryptoJs = require("crypto-js");
 
+const jwt = require("jsonwebtoken");
+const { expressJwt } = require("express-jwt");
+const session = require("express-session");
+
 const app = express();
 const port = 3000;
 
@@ -383,41 +387,96 @@ app.post("/api/signIn", (req, res) => {
 });
 //^^^^^^^^^ User sign in
 
-//User log In
+//User log In --->it is for session
+// app.post("/api/logIn", (req, res) => {
+
+//   const data = req.body.data;
+//   const secretKey = "MySecretKey";
+//   const bytes = CryptoJs.AES.decrypt(data.encUserPassword, secretKey);
+//   const userPassword = JSON.parse(bytes.toString(CryptoJs.enc.Utf8));
+
+//   const userLoginQuery = `select userId from users where name=\"${data.username}\"and password=\"${userPassword}\"`;
+//   connection.query(userLoginQuery, (err, result) => {
+//     if (err) {
+//       console.error("Error updating order status:", err);
+//       res.status(500).json({ error: "Error updating order status" });
+//     } else {
+//       if (result[0]) {
+//         console.log(result[0].userId);
+
+//         res.status(200).json({ userId: result[0].userId, status: "yes" });
+//       } else {
+//         console.log("no invalid username or password");
+//         res.status(200).json({ message: "no invalid username or password" });
+//       }
+//     }
+//   });
+// });
+//^^^^^^^^^ User log In
+
+///^^^^^^^^ for userAuthentication
+
+//////// the below code is for server side token management
+
+const SECRET_KEY = "MYSERVERSECRETKEY";
+
+// expressJwt({ secret: SECRET_KEY, algorithms: ["HS256"] });
+// app.use(
+//   session({
+//     secret: SECRET_KEY,
+//     resave: false,
+//     saveUninitialized: true,
+//     cookie: { secure: false },
+//   })
+// );
+
 app.post("/api/logIn", (req, res) => {
-  // const userDetails = req.body.userDetails;
-  // console.log(userDetails);
   const data = req.body.data;
-  // console.log(data);
   const secretKey = "MySecretKey";
   const bytes = CryptoJs.AES.decrypt(data.encUserPassword, secretKey);
   const userPassword = JSON.parse(bytes.toString(CryptoJs.enc.Utf8));
 
-  // Perform database update operation to update orderId
   const userLoginQuery = `select userId from users where name=\"${data.username}\"and password=\"${userPassword}\"`;
   connection.query(userLoginQuery, (err, result) => {
     if (err) {
       console.error("Error updating order status:", err);
       res.status(500).json({ error: "Error updating order status" });
     } else {
-      // console.log("login result: ", result);
       if (result[0]) {
         console.log(result[0].userId);
-
-        res.status(200).json({ userId: result[0].userId, status: "yes" });
+        // for token
+        const userId = result[0].userId;
+        const token = jwt.sign({ userId }, SECRET_KEY, { expiresIn: "24h" });
+        res
+          .status(200)
+          .json({ token: token, userId: result[0].userId, status: "yes" });
+        //^^^^ for token
+        //res.status(200).json({ userId: result[0].userId, status: "yes" });
       } else {
         console.log("no invalid username or password");
         res.status(200).json({ message: "no invalid username or password" });
       }
     }
   });
-
-  // Return a success response
-  // res.status(200).json({ message: "Order ID updated successfully" });
 });
-//^^^^^^^^^ User log In
 
-///^^^^^^^^ for userAuthentication
+// Sample protected route
+// app.use(
+//   expressJwt({ secret: SECRET_KEY, algorithms: ["HS256"] }).unless({
+//     path: ["/api/login", "/api/"],
+//   })
+// );
+// app.get(
+//   "/api/protected-route",
+
+//   (req, res) => {
+//     // Route will be accessible only if the JWT token is valid
+//     console.log(req.userId);
+//     res.json({ message: "You are authenticated and authorized" });
+//   }
+// );
+
+////^^^^^^^^^^ the above code is for server side token management
 // function test() {
 //   const query = "SELECT * FROM shops";
 

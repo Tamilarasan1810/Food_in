@@ -8,19 +8,49 @@ import { ShopItems } from '../models/shop-items';
   styleUrls: ['./shop-items.component.css'],
 })
 export class ShopItemsComponent {
-  shopItems: ShopItems[] = [];
-  constructor(private foodServices: FoodServicesService) {}
+  // shopItems: ShopItems[] = [];
+  shopItems: any = [];
 
+  setShopItem(Item: ShopItems) {
+    // console.log('Hey: ', Item);
+
+    this.shopItems.push({ quantity: 0, item: Item });
+  }
+
+  constructor(private foodServices: FoodServicesService) {}
+  quantity = 0;
+  currentItem: ShopItems | undefined;
   ngOnInit() {
-    this.shopItems = this.foodServices.getSelectedShopItems();
+    // this.shopItems = this.foodServices.getSelectedShopItems();
     this.foodServices.shopItemsChanged.subscribe((data: ShopItems[]) => {
-      this.shopItems = data;
+      // this.shopItems = data;
+      this.shopItems = [];
+
+      if (data) {
+        data.forEach((item) => {
+          this.setShopItem(item);
+        });
+      }
     });
   }
 
-  addToCart(productId: string, price: number, shopId: string) {
+  increaseQuantity(item: any) {
+    item.quantity++;
+  }
+  decreaseQuantity(item: any) {
+    if (item.quantity > 0) {
+      item.quantity--;
+    }
+  }
+  addToCart(
+    productId: string,
+    price: number,
+    shopId: string,
+    quantity: number
+  ) {
     // console.log(this.foodServices.selectedShop);
-    this.foodServices.addItemToCart(productId, price, shopId);
+    //    console.log('shopId: ', shopId, ' Quantity: ', quantity);
+    this.foodServices.addItemToCart(productId, price, shopId, quantity);
   }
   cartItems: any;
   getCartItems() {

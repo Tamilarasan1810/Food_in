@@ -79,3 +79,7 @@ ALTER TABLE users MODIFY mobileNo BIGINT(10);
 
 select userId from users where name="tamil"and password="king";
 
+SELECT * FROM allOrders WHERE orderId="O0011";
+SELECT p.*,(SELECT qty  FROM allOrders WHERE orderId="O0011" AND productId=p.productId  )  AS quantity FROM product p INNER JOIN allorders a ON p.productId = a.productId INNER JOIN orders o ON a.orderId = o.orderId WHERE o.orderId = "O0011";
+
+SELECT qty  AS quantity FROM allOrders WHERE orderId="O0011" AND productId="P0003";

@@ -8,19 +8,44 @@
     <th>Review</th>
     <th>Rating</th>
     <th>Price</th>
+    <th>Quantity</th>
   </tr>
   <tr *ngFor="let item of shopItems">
-    <td>{{ item.productId }}</td>
-    <td>{{ item.name }}</td>
-    <td>{{ item.shopId }}</td>
-    <td>{{ item.category }}</td>
-    <td>{{ item.review }}</td>
-    <td>{{ item.rating }}</td>
-    <td>{{ item.price }}</td>
+    <td>{{ item.item.productId }}</td>
+    <td>{{ item.item.name }}</td>
+    <td>{{ item.item.shopId }}</td>
+    <td>{{ item.item.category }}</td>
+    <td>{{ item.item.review }}</td>
+    <td>{{ item.item.rating }}</td>
+    <td>{{ item.item.price }}</td>
+
+    <td>
+      <div class="button-container">
+        <button class="btn btn-danger" (click)="decreaseQuantity(item)">
+          <b>-</b>
+        </button>
+        <span
+          class="text-between-buttons"
+          style="padding-left: 8px; padding-right: 8px"
+          ><b>{{ item.quantity }}</b></span
+        >
+        <button class="btn btn-success" (click)="increaseQuantity(item)">
+          <b>+</b>
+        </button>
+      </div>
+    </td>
     <td>
       <button
         class="btn btn-primary"
-        (click)="addToCart(item.productId, item.price, item.shopId)"
+        [disabled]="item.quantity <= 0"
+        (click)="
+          addToCart(
+            item.item.productId,
+            item.item.price,
+            item.item.shopId,
+            item.quantity
+          )
+        "
       >
         Add to Cart
       </button>

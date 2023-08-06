@@ -35,6 +35,7 @@ export class ShopOrderOwnerComponent {
   }
   ordersList: ShopOrderListsOwner = {
     orderId: 'O0004',
+
     products: [
       {
         productId: 'P0001',
@@ -44,6 +45,7 @@ export class ShopOrderOwnerComponent {
         review: 'No review',
         rating: 4.2,
         price: 160,
+        quantity: 1,
       },
       {
         productId: 'P0002',
@@ -53,6 +55,7 @@ export class ShopOrderOwnerComponent {
         review: 'No review',
         rating: 4.2,
         price: 40,
+        quantity: 1,
       },
       {
         productId: 'P0003',
@@ -62,6 +65,7 @@ export class ShopOrderOwnerComponent {
         review: 'No review',
         rating: 4.2,
         price: 180,
+        quantity: 1,
       },
     ],
   };
@@ -81,7 +85,8 @@ export class ShopOrderOwnerComponent {
         console.error('Error from server:', error);
       }
     );
-    console.log('clicked!!');
+    // console.log('clicked!!', this.ordersList);
+    // console.log('end');
   }
 
   // updateOrders() {

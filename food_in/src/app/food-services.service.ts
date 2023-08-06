@@ -8,6 +8,7 @@ import { ShopOrderListsOwner } from './models/shop-order-lists-owner';
 
 import { map } from 'rxjs/operators';
 import { UserAuthenticationService } from './user-authentication.service';
+import { ShopOrderListItemsOwner } from './models/shop-order-list-items-owner';
 
 @Injectable({
   providedIn: 'root',
@@ -88,11 +89,16 @@ export class FoodServicesService {
   }
 
   cartItems: CartItems[] = [];
-  addItemToCart(productId: string, price: number, shopId: string) {
+  addItemToCart(
+    productId: string,
+    price: number,
+    shopId: string,
+    quantity: number
+  ) {
     this.cartItems.push({
       productId: productId,
       shopId: shopId,
-      qty: 1,
+      qty: quantity,
       price: price,
     });
     //console.log(this.cartItems[0].price);
@@ -193,16 +199,19 @@ export class FoodServicesService {
     const getProductsListByOrderIdUrl = `http://localhost:3000/api/getProductsListByOrderId`;
     return this.http.post<any>(getProductsListByOrderIdUrl, { orderId }).pipe(
       map((response: any[]) => {
+        // console.log('Order Item List: ', response);
+        // console.log('end');
         const products = response.map(
           (item) =>
-            new ShopItems(
+            new ShopOrderListItemsOwner(
               item.productId,
               item.name,
               item.shopId,
               item.category,
               item.review,
               item.rating,
-              item.price
+              item.price,
+              item.quantity
             )
         );
         return new ShopOrderListsOwner(orderId, products);

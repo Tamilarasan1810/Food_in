@@ -294,15 +294,18 @@ app.post("/api/updateShopOrderStatus", (req, res) => {
 
 app.post("/api/getProductsListByOrderId", (req, res) => {
   const orderId = req.body.orderId;
-  console.log("orderId: ", orderId);
+  // console.log("orderId: ", orderId);
   // MySQL query to retrieve products based on orderId
-  const query = ` SELECT p.* FROM product p INNER JOIN allorders a ON p.productId = a.productId INNER JOIN orders o ON a.orderId = o.orderId WHERE o.orderId = \"${orderId}\"`;
-
+  // const query = ` SELECT p.* FROM product p INNER JOIN allorders a ON p.productId = a.productId INNER JOIN orders o ON a.orderId = o.orderId WHERE o.orderId = \"${orderId}\"`;
+  //test//
+  const query = ` SELECT p.*,(SELECT qty  FROM allOrders WHERE orderId=\"${orderId}\" AND productId= p.productId  )  AS quantity FROM product p INNER JOIN allorders a ON p.productId = a.productId INNER JOIN orders o ON a.orderId = o.orderId WHERE o.orderId = \"${orderId}\" `;
+  //test^^//
   connection.query(query, (err, result) => {
     if (err) {
       console.error("Error retrieving products:", err);
       res.status(500).json({ error: "Error retrieving products" });
     } else {
+      // console.log("result: ", result);
       const products = result.map((item) => ({
         productId: item.productId,
         name: item.name,
@@ -311,6 +314,7 @@ app.post("/api/getProductsListByOrderId", (req, res) => {
         review: item.review,
         rating: item.rating,
         price: item.price,
+        quantity: item.quantity,
       }));
       // console.log(products);
       res.status(200).json(products);

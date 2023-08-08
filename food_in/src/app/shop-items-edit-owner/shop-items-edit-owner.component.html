@@ -1,1 +1,75 @@
-<p>shop-items-edit-owner works!</p>
+<h2>shop Items</h2>
+<table border="1">
+  <tr>
+    <th>Product Id</th>
+    <th>Name</th>
+    <th>ShopId</th>
+    <th>Category</th>
+    <th>Review</th>
+    <th>Rating</th>
+    <th>Price</th>
+    <th>Actions</th>
+    <!-- New column for actions -->
+  </tr>
+  <!-- ... (other code) ... -->
+  <tr *ngFor="let item of shopItems">
+    <td>{{ item.productId }}</td>
+    <td>
+      <ng-container *ngIf="!item.isEditing; else editNameInput">
+        {{ item.name }}
+      </ng-container>
+      <ng-template #editNameInput>
+        <input [(ngModel)]="item.name" />
+      </ng-template>
+    </td>
+    <td>{{ item.shopId }}</td>
+    <td>
+      <ng-container *ngIf="!item.isEditing; else editCategoryDropdown">
+        {{ item.category }}
+      </ng-container>
+      <ng-template #editCategoryDropdown>
+        <select [(ngModel)]="item.category">
+          <option value="VEG">VEG</option>
+          <option value="NON-VEG">NON-VEG</option>
+        </select>
+      </ng-template>
+    </td>
+    <td>{{ item.review }}</td>
+    <td>{{ item.rating }}</td>
+    <td>
+      <ng-container *ngIf="!item.isEditing; else editPriceInput">
+        {{ item.price }}
+      </ng-container>
+      <ng-template #editPriceInput>
+        <input [(ngModel)]="item.price" type="number" />
+      </ng-template>
+    </td>
+    <td>
+      <button
+        class="btn btn-warning"
+        *ngIf="!item.isEditing && !item.isEditing"
+        (click)="toggleEditMode(item)"
+      >
+        Edit Item
+      </button>
+
+      <button
+        class="btn btn-success"
+        *ngIf="item.isEditing"
+        (click)="saveChanges(item)"
+        (click)="toggleEditMode(item)"
+      >
+        Save Changes
+      </button>
+
+      <button
+        class="btn btn-danger"
+        style="margin-left: 5px"
+        (click)="deleteItem(item)"
+      >
+        Delete
+      </button>
+    </td>
+  </tr>
+  <!-- ... (other code) ... -->
+</table>

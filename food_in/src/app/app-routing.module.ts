@@ -8,6 +8,7 @@ import { ShopOrderOwnerComponent } from './shop-order-owner/shop-order-owner.com
 import { AuthenticateComponent } from './auth/authenticate/authenticate.component';
 import { AuthGuard } from './auth.guard';
 import { AddShopItemsOwnerComponent } from './add-shop-items-owner/add-shop-items-owner.component';
+import { ShopItemsEditOwnerComponent } from './shop-items-edit-owner/shop-items-edit-owner.component';
 
 const routes: Routes = [
   { path: '', component: DashboardComponent, canActivate: [AuthGuard] },
@@ -28,6 +29,7 @@ const routes: Routes = [
     canActivate: [AuthGuard],
   },
   { path: 'addItems', component: AddShopItemsOwnerComponent },
+  { path: 'editItems', component: ShopItemsEditOwnerComponent },
   { path: 'login', component: AuthenticateComponent },
 ];
 

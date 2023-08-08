@@ -524,6 +524,48 @@ app.post("/api/addShopItem", (req, res) => {
 
 //^^^ add shop Item
 
+// edit shop Item
+
+app.post("/api/editShopItem", (req, res) => {
+  const productId = req.body.productId;
+  const itemName = req.body.itemName;
+  const itemPrice = req.body.itemPrice;
+  const category = req.body.category;
+  console.log(productId, itemName, itemPrice, category);
+
+  const editItemQuery = `UPDATE product SET name="${itemName}", price=${itemPrice}, category="${category}" WHERE productId="${productId}"`;
+
+  connection.query(editItemQuery, (err, result) => {
+    if (err) {
+      console.error("Error in Editing product to db: ", err);
+      res.status(500).json({ error: "Error Editing product" });
+    } else {
+      res.status(200).json({ message: "Editing product successful" });
+    }
+  });
+
+  // res.status(200).json({ message: "Item Edited Successfully" });
+});
+
+//^^^ edit shop Item
+
+// delete shop Item
+
+app.post("/api/deleteShopItem", (req, res) => {
+  const productId = req.body.productId;
+  const deleteItemQuery = `DELETE FROM product WHERE productId=\"${productId}\"`;
+  connection.query(deleteItemQuery, (err, result) => {
+    if (err) {
+      console.error("Error in Deleting product to db: ", err);
+      res.status(500).json({ error: "Error Deleting product" });
+    } else {
+      res.status(200).json({ message: "Deleting product successful" });
+    }
+  });
+});
+
+//^^^ delete shop Item
+
 app.listen(port, () => {
   console.log(`Server is being server on port http://localhost:${port}`);
 });

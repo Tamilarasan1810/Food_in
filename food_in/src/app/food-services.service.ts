@@ -253,4 +253,53 @@ export class FoodServicesService {
   }
 
   //^^^^^^^^^^Show owner add items side
+
+  //get shop items to edit
+
+  editItemData: any;
+  editShopItems: ShopItems[] = [];
+  editShopItemsChanged = new EventEmitter<ShopItems[]>();
+
+  getEditShopItems() {
+    this.fetchEditSelectedShopItem();
+  }
+
+  async fetchEditSelectedShopItem(): Promise<ShopItems[]> {
+    const ShopId = 'S0001';
+    const getShopitemsUrl = `http://localhost:3000/api/getShopItem/:${ShopId}`;
+    try {
+      this.editItemData = await this.http
+        .get<ShopItems[]>(getShopitemsUrl)
+        .toPromise();
+      console.log(this.editItemData);
+      this.editShopItems = this.editItemData;
+      this.editShopItemsChanged.emit(this.editShopItems);
+
+      return this.editItemData;
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  editShopItem(
+    productId: string,
+    itemName: string,
+    itemPrice: number,
+    category: string
+  ) {
+    const addShopItemUrl = `http://localhost:3000/api/editShopItem`;
+    return this.http.post<any>(addShopItemUrl, {
+      productId,
+      itemName,
+      itemPrice,
+      category,
+    });
+  }
+
+  deleletShopItem(productId: string) {
+    const deletShopItemUrl = `http://localhost:3000/api/deleteShopItem`;
+    return this.http.post<any>(deletShopItemUrl, { productId });
+  }
+
+  //^^^^^^^^^^^^^^get shop items to edit
 }

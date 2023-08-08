@@ -45,12 +45,22 @@ export class ShopItemsComponent {
   addToCart(
     productId: string,
     price: number,
+    name: string,
     shopId: string,
     quantity: number
   ) {
     // console.log(this.foodServices.selectedShop);
     //    console.log('shopId: ', shopId, ' Quantity: ', quantity);
-    this.foodServices.addItemToCart(productId, price, shopId, quantity);
+    this.foodServices.addItemToCart(productId, price, name, shopId, quantity);
+    //to update quantity to zero again
+    const foundItem = this.shopItems.find(
+      (item: any) => item.item.productId === productId
+    );
+    if (foundItem) {
+      foundItem.quantity = 0;
+    }
+
+    //
   }
   cartItems: any;
   getCartItems() {

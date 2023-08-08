@@ -49,37 +49,31 @@ SELECT CONCAT('O', LPAD(MAX(CAST(SUBSTRING(orderId, 2) AS UNSIGNED)) + 1, 4, '0'
 SELECT * FROM orders;
 SELECT * FROM allorders;
 SELECT * FROM product;
+
+/*ALTER TABLE orders ADD totalAmount INT;*/
+/*UPDATE orders SET totalAmount = 0 where orderId>="O0001";*/
+
+delete from product where productId>="P0004";
+DELETE from orders where orderId>="O0002";
+DELETE from allorders where orderId>="O0002";
+/*UPDATE product SET productId='P0010' where productId="";*/
+
+
 /*INSERT INTO orders (orderId, shopId, userId, dateTime)VALUES("O0001","S0001","U0001",NOW());*/
 /*ALTER TABLE orders ADD orderStatus integer;*/
 
-SELECT p.productId, p.name, p.price
+SELECT p.*
 FROM product p
 INNER JOIN allorders a ON p.productId = a.productId
 INNER JOIN orders o ON a.orderId = o.orderId
 WHERE o.orderId = 'O0004';/*This query is to select the products based on the orderId -- It returns all the products that is selected on a single orderId*/
 
 /*INSERT INTO allorders(orderId,productId,qty,price)VALUES("O0002","P0001",1,160);*/
-DELETE from orders where orderId>="O0002";
-DELETE from allorders where orderId>="O0002";
-DELETE from users where userId>"U0001";
+
 
 /*SELECT * FROM orders WHERE userId = "U0001";*/
 
 /*UPDATE orders SET orderStatus=0 where orderId='O0001';*/
 /*SELECT * FROM orders;*/
 
-INSERT INTO users (userId, name, mobileNo, password) VALUES ("U0005","chicken",7234548791,"chickenWay");
-SELECT * FROM users;
-INSERT INTO users (userId, name, mobileNo, password) VALUES ("U0004","chicken",723548796,"chickenWay");
 
-ALTER TABLE users  MODIFY mobileNo INT(11) ;
-UPDATE users SET mobileNo=7904304879 where userId>="U0001";
-
-ALTER TABLE users MODIFY mobileNo BIGINT(10);
-
-select userId from users where name="tamil"and password="king";
-
-SELECT * FROM allOrders WHERE orderId="O0011";
-SELECT p.*,(SELECT qty  FROM allOrders WHERE orderId="O0011" AND productId=p.productId  )  AS quantity FROM product p INNER JOIN allorders a ON p.productId = a.productId INNER JOIN orders o ON a.orderId = o.orderId WHERE o.orderId = "O0011";
-
-SELECT qty  AS quantity FROM allOrders WHERE orderId="O0011" AND productId="P0003";

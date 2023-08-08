@@ -4,6 +4,7 @@
     <th>OrderId</th>
     <th>ShopId</th>
     <th>userId</th>
+    <th>Total Amount</th>
     <th>orderStatus</th>
     <th>dateTime</th>
   </tr>
@@ -11,7 +12,9 @@
     <td>{{ order.orderId }}</td>
     <td>{{ order.shopId }}</td>
     <td>{{ order.userId }}</td>
+    <td>{{ order.totalAmount }}</td>
     <!-- <td>{{ order.orderStatus }}</td> -->
+
     <td
       *ngIf="order.orderStatus == 0"
       style="background-color: rgb(247, 139, 139)"

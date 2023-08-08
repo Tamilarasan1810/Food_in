@@ -17,6 +17,10 @@ export class CartComponent {
   cartItems: any;
   ngOnInit() {
     this.cartItems = this.foodServices.getCartItem();
+    this.foodServices.cartItemsChanged.subscribe((response) => {
+      this.cartItems = response;
+    });
+    // console.log('Cart Items: ', this.cartItems);
   }
   private ordersUrl = 'http://localhost:3000/api/orders';
   // makeOrder(): Observable<any> {
@@ -57,5 +61,8 @@ export class CartComponent {
         console.log('Error inserting Order: ', error);
       }
     );
+  }
+  deleteCartItem(productId: string) {
+    this.foodServices.deleteCartItem(productId);
   }
 }

@@ -103,8 +103,10 @@ app.post("/api/orders", (req, res) => {
 
 app.post("/api/updateAllOrders", async (req, res) => {
   //
+  const totalPrice = req.body.finalTotalPrice;
   const cartItems = req.body.items;
   const userId = req.body.userId;
+  console.log("Total Price: ", totalPrice);
   // console.log("userIdd : ", user);
   //console.log("Cart Items :: ", cartItems);
   ///
@@ -145,7 +147,7 @@ app.post("/api/updateAllOrders", async (req, res) => {
     // console.log("ShopId : ", cartItemShopId);
     // Step 3: Insert the new data with the new orderId into the orders table
     // const insertOrderQuery = `INSERT INTO orders (orderId, shopId, userId, dateTime,orderStatus) VALUES (\"${newOrderId}\",\"${cartItemShopId}\", 'U0001', NOW(),0)`;
-    const insertOrderQuery = `INSERT INTO orders (orderId, shopId, userId, dateTime,orderStatus) VALUES (\"${newOrderId}\",\"${cartItemShopId}\", \"${userId}\", NOW(),0)`;
+    const insertOrderQuery = `INSERT INTO orders (orderId, shopId, userId, dateTime,orderStatus,totalAmount) VALUES (\"${newOrderId}\",\"${cartItemShopId}\", \"${userId}\", NOW(),0,${totalPrice})`;
 
     connection.query(insertOrderQuery, (err, result) => {
       // if (err) {

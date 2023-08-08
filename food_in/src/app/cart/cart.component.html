@@ -1,6 +1,29 @@
-<ul *ngFor="let cart of cartItems">
-  <li>{{ cart.productId }}</li>
-</ul>
-<button class="btn btn-primary" (click)="updateOrders()">
-  Update all orders
-</button>
+<h2 *ngIf="cartItems.length == 0">Add Some Items Cart : )</h2>
+
+<div class="card mb-3" *ngIf="cartItems.length > 0">
+  <table border="1">
+    <tr>
+      <th>Product Id</th>
+      <th>Shop Id</th>
+      <th>Name</th>
+      <th>Quantity</th>
+      <th>Price Per Item</th>
+    </tr>
+    <tr class="exp-tr" *ngFor="let cart of cartItems">
+      <td>{{ cart.productId }}</td>
+      <td>{{ cart.shopId }}</td>
+      <td>{{ cart.name }}</td>
+      <td>{{ cart.qty }}</td>
+      <td>1 * {{ cart.price }}</td>
+      <td>
+        <button class="btn btn-danger" (click)="deleteCartItem(cart.productId)">
+          Delete
+        </button>
+      </td>
+    </tr>
+  </table>
+
+  <button class="btn btn-primary" (click)="updateOrders()">
+    Update all orders
+  </button>
+</div>

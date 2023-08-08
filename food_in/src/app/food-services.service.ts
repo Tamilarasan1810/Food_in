@@ -78,7 +78,7 @@ export class FoodServicesService {
       this.itemData = await this.http
         .get<ShopItems[]>(getShopitemsUrl)
         .toPromise();
-      console.log(this.itemData);
+      // console.log(this.itemData);
       this.shopItems = this.itemData;
       this.shopItemsChanged.emit(this.shopItems);
 
@@ -89,15 +89,18 @@ export class FoodServicesService {
   }
 
   cartItems: CartItems[] = [];
+  cartItemsChanged = new EventEmitter<any>();
   addItemToCart(
     productId: string,
     price: number,
+    name: string,
     shopId: string,
     quantity: number
   ) {
     this.cartItems.push({
       productId: productId,
       shopId: shopId,
+      name: name,
       qty: quantity,
       price: price,
     });
@@ -105,6 +108,13 @@ export class FoodServicesService {
   }
   getCartItem() {
     return this.cartItems.slice();
+  }
+
+  deleteCartItem(productId: string) {
+    this.cartItems = this.cartItems.filter(
+      (item) => item.productId != productId
+    );
+    this.cartItemsChanged.emit(this.cartItems);
   }
 
   // to update cart items to allorders table in database
@@ -115,14 +125,24 @@ export class FoodServicesService {
   //   return this.http.post<any>(this.updateOrdersUrl, { items });
   //   //console.log(response);
   // }
+  totalPrice = 0;
   updateAllOrders(): Observable<any> {
     const userId = this.userAuth.LoggedUserDetails.userId;
     const items = this.cartItems;
     // const userId = this.userDetails.userId;
+    this.totalPrice = 0;
+    items.forEach((item) => {
+      this.totalPrice += item.qty * item.price;
+    });
     this.cartItems = [];
+    this.cartItemsChanged.emit(this.cartItems);
     // console.log('userId: ', userId);
-
-    return this.http.post<any>(this.updateOrdersUrl, { items, userId });
+    const finalTotalPrice = this.totalPrice;
+    return this.http.post<any>(this.updateOrdersUrl, {
+      items,
+      userId,
+      finalTotalPrice,
+    });
   }
   //orderStatus
   orderStatus: any;
@@ -271,7 +291,7 @@ export class FoodServicesService {
       this.editItemData = await this.http
         .get<ShopItems[]>(getShopitemsUrl)
         .toPromise();
-      console.log(this.editItemData);
+      // console.log(this.editItemData);
       this.editShopItems = this.editItemData;
       this.editShopItemsChanged.emit(this.editShopItems);
 

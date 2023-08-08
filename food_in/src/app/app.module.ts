@@ -16,6 +16,8 @@ import { RouterModule } from '@angular/router';
 import { ShopOrderOwnerComponent } from './shop-order-owner/shop-order-owner.component';
 import { AuthenticateComponent } from './auth/authenticate/authenticate.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { AddShopItemsOwnerComponent } from './add-shop-items-owner/add-shop-items-owner.component';
+import { ShopItemsEditOwnerComponent } from './shop-items-edit-owner/shop-items-edit-owner.component';
 
 @NgModule({
   declarations: [
@@ -30,6 +32,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     ShopItemsComponent,
     ShopOrderOwnerComponent,
     AuthenticateComponent,
+    AddShopItemsOwnerComponent,
+    ShopItemsEditOwnerComponent,
   ],
   imports: [
     BrowserModule,

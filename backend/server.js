@@ -487,20 +487,42 @@ app.post("/api/logIn", (req, res) => {
 
 ////^^^^^^^^^^ the above code is for server side token management
 
-// function test() {
-//   const query = "SELECT * FROM shops";
+//add shop Item
 
-//   connection.query(query, (err, result) => {
-//     if (err) {
-//       console.log("Error in execting the Query: ", err);
-//       res.status(500, send("Error fetching data from Database"));
-//     } else {
-//       console.log(result);
-//     }
-//   });
-// }
+app.post("/api/addShopItem", (req, res) => {
+  const itemName = req.body.itemName;
+  const itemPrice = req.body.itemPrice;
+  const category = req.body.category;
+  const finalProductId = "";
+  const getmaxProductIdQuery =
+    "SELECT MAX(CAST(SUBSTRING(productId, 2) AS UNSIGNED)) AS maxProductId FROM product";
+  connection.query(getmaxProductIdQuery, (err, result) => {
+    if (err) {
+      console.error("Error retrieving maxProductId:", err);
+      res.status(500).send("Error retrieving maxProductId");
+      return;
+    }
+    const maxProductId = result[0].maxProductId || 0; // If no rows, initialize to 0
+    //console.log("maxProductId: ", maxProductId);
+    // console.log("Max orderId: ", maxProductId);
+    newProductId = `P${String(maxProductId + 1).padStart(4, "0")}`;
+    this.finalProductId = newProductId;
+    // console.log(this.finalProductId);
+    // console.log(itemName, itemPrice, category);
 
-// test();
+    const addItemQuery = `INSERT INTO product(productId,name,price,shopId,category,review,rating)VALUES(\"${newProductId}\",\"${itemName}\",${itemPrice},"S0001",\"${category}\","No review",4.2)`;
+    connection.query(addItemQuery, (err, result) => {
+      if (err) {
+        console.error("Error Adding Item:", err);
+        res.status(500).json({ error: "Error Adding Item" });
+      } else {
+        res.status(200).json({ message: "Item Added Successfully" });
+      }
+    });
+  });
+});
+
+//^^^ add shop Item
 
 app.listen(port, () => {
   console.log(`Server is being server on port http://localhost:${port}`);

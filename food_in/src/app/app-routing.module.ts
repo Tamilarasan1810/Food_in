@@ -7,6 +7,7 @@ import { MyOrderStatusComponent } from './my-order-status/my-order-status.compon
 import { ShopOrderOwnerComponent } from './shop-order-owner/shop-order-owner.component';
 import { AuthenticateComponent } from './auth/authenticate/authenticate.component';
 import { AuthGuard } from './auth.guard';
+import { AddShopItemsOwnerComponent } from './add-shop-items-owner/add-shop-items-owner.component';
 
 const routes: Routes = [
   { path: '', component: DashboardComponent, canActivate: [AuthGuard] },
@@ -26,6 +27,7 @@ const routes: Routes = [
     component: ShopOrderOwnerComponent,
     canActivate: [AuthGuard],
   },
+  { path: 'addItems', component: AddShopItemsOwnerComponent },
   { path: 'login', component: AuthenticateComponent },
 ];
 

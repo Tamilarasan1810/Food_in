@@ -240,4 +240,17 @@ export class FoodServicesService {
   // }
 
   //^^^^^^^^^^^^shop owner orderStatus side
+
+  //Show owner add items side
+
+  addShopItem(itemName: string, itemPrice: number, category: string) {
+    const addShopItemUrl = `http://localhost:3000/api/addShopItem`;
+    return this.http.post<any>(addShopItemUrl, {
+      itemName,
+      itemPrice,
+      category,
+    });
+  }
+
+  //^^^^^^^^^^Show owner add items side
 }

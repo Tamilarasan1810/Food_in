@@ -1,0 +1,156 @@
+<!-- <div class="add-items-form">
+  <h2>Add Item</h2>
+  <form #addItemsForm="ngForm" (ngSubmit)="addItems(addItemsForm)">
+    <div class="input-group mb-3">
+      <div class="input-group-prepend">
+        <label for="itemName" class="input-group-text">Item Name</label>
+      </div>
+      <input
+        type="text"
+        ngModel
+        name="itemName"
+        #itemName="ngModel"
+        id="itemName"
+        class="form-control"
+        placeholder="Item Name"
+      />
+    </div>
+    <div class="input-group mb-3">
+      <div class="input-group-prepend">
+        <label for="itemPrice" class="input-group-text">Price</label>
+      </div>
+      <input
+        type="number"
+        ngModel
+        name="itemPrice"
+        #itemPrice="ngModel"
+        id="itemPrice"
+        class="form-control"
+        placeholder="price"
+      />
+    </div>
+    <div class="form-group mb-3">
+      <label for="category">Category</label>
+      <br />
+      <label class="form-check-label" for="flexSwitchCheckDefault">VEG</label>
+
+      <div class="form-check form-switch">
+        <input
+          class="form-check-input"
+          type="radio"
+          name="category"
+          ngModel
+          #category="ngModel"
+          value="VEG"
+          role="switch"
+          id="flexSwitchCheckDefault"
+        />
+      </div>
+      <br />
+      <label class="form-check-label" for="flexSwitchCheckChecked"
+        >NON-VEG</label
+      >
+      <div class="form-check form-switch">
+        <input
+          class="form-check-input"
+          type="radio"
+          name="category"
+          value="NON-VEG"
+          ngModel
+          #category="ngModel"
+          role="switch"
+          id="flexSwitchCheckDefault"
+        />
+      </div>
+    </div>
+    <button class="btn btn-success mt-4">Submit</button>
+
+  </form>
+</div>
+
+<link
+  href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css"
+  rel="stylesheet"
+/>
+<link
+  href="https://getbootstrap.com/docs/5.3/assets/css/docs.css"
+  rel="stylesheet"
+/> -->
+
+<div class="add-items-form">
+  <h2>Add Item</h2>
+  <form #addItemsForm="ngForm" (ngSubmit)="addItems(addItemsForm)">
+    <!-- Item Name -->
+    <div class="input-group mb-3">
+      <div class="input-group-prepend">
+        <label for="itemName" class="input-group-text">Item Name</label>
+      </div>
+      <input
+        type="text"
+        [(ngModel)]="itemName"
+        name="itemName"
+        id="itemName"
+        class="form-control"
+        placeholder="Item Name"
+      />
+    </div>
+
+    <!-- Item Price -->
+    <div class="input-group mb-3">
+      <div class="input-group-prepend">
+        <label for="itemPrice" class="input-group-text">Price</label>
+      </div>
+      <input
+        type="number"
+        [(ngModel)]="itemPrice"
+        name="itemPrice"
+        id="itemPrice"
+        class="form-control"
+        placeholder="Price"
+      />
+    </div>
+
+    <!-- Item Category -->
+    <div class="form-group mb-3">
+      <label for="category">Category</label>
+      <br />
+      <label class="form-check-label" for="veg">VEG</label>
+      <div class="form-check form-switch">
+        <input
+          class="form-check-input"
+          type="radio"
+          name="category"
+          [(ngModel)]="category"
+          value="VEG"
+          id="veg"
+        />
+      </div>
+      <br />
+      <label class="form-check-label" for="nonveg">NON-VEG</label>
+      <div class="form-check form-switch">
+        <input
+          class="form-check-input"
+          type="radio"
+          name="category"
+          [(ngModel)]="category"
+          value="NON-VEG"
+          id="nonveg"
+        />
+      </div>
+    </div>
+
+    <!-- Submit Button -->
+    <button type="submit" class="btn btn-success mt-4">Submit</button>
+  </form>
+</div>
+
+<!--  -->
+
+<link
+  href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css"
+  rel="stylesheet"
+/>
+<link
+  href="https://getbootstrap.com/docs/5.3/assets/css/docs.css"
+  rel="stylesheet"
+/>

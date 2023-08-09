@@ -1,5 +1,5 @@
 <h2>Order Status</h2>
-<table border="1">
+<!-- <table border="1">
   <tr>
     <th>OrderId</th>
     <th>ShopId</th>
@@ -13,7 +13,6 @@
     <td>{{ order.shopId }}</td>
     <td>{{ order.userId }}</td>
     <td>{{ order.totalAmount }}</td>
-    <!-- <td>{{ order.orderStatus }}</td> -->
 
     <td
       *ngIf="order.orderStatus == 0"
@@ -30,18 +29,88 @@
 
     <td>{{ order.dateTime }}</td>
 
-    <!-- <td>
-      <button
-        class="btn btn-primary"
-        (click)="addToCart(item.productId, item.price, item.shopId)"
-      >
-        Add to Cart
-      </button>
-    </td> -->
+    
   </tr>
-</table>
-<hr />
+</table> -->
+<!-- <hr /> -->
 <!-- <button class="btn btn-primary" (click)="getCartItems()">Get Cart Items</button>
 <ul *ngFor="let cart of cartItems">
   <li>{{ cart }}</li> 
 </ul>-->
+
+<!--  -->
+<!--  -->
+
+<div class="card mb-3" *ngFor="let order of orderStatus">
+  <div class="card-header">
+    <h5 class="card-title">
+      <table border="0" class="exp">
+        <tr class="exp-tr">
+          <td>{{ order.orderId }}</td>
+          <td>{{ order.shopId }}</td>
+          <td>{{ order.userId }}</td>
+          <!-- <td>Rs. {{ order.totalAmount }}</td> -->
+          <td
+            class="btn"
+            *ngIf="order.orderStatus == 0"
+            style="background-color: rgb(247, 139, 139)"
+          >
+            Order Not Accepted
+          </td>
+          <td
+            class="btn"
+            *ngIf="order.orderStatus == 1"
+            style="background-color: rgb(113, 223, 124)"
+          >
+            Order Accepted
+          </td>
+          <td>{{ order.dateTime }}</td>
+          <td>OTP: {{ order.orderOTP }}</td>
+          <td>
+            <button
+              (click)="toggleProducts()"
+              (click)="getOrderProducts(order.orderId)"
+              class="btn btn-warning"
+            >
+              See Products
+            </button>
+          </td>
+        </tr>
+      </table>
+    </h5>
+  </div>
+  <div
+    class="card-body"
+    *ngIf="showProducts && order.orderId == ordersList.orderId"
+  >
+    <!-- Products table will be shown here if expanded -->
+    <div>
+      <table class="table table-bordered mt-3">
+        <thead>
+          <tr>
+            <th>Product ID</th>
+            <th>Name</th>
+            <th>Category</th>
+            <th>Quantity</th>
+            <th>Price</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let product of ordersList.products">
+            <td>{{ product.productId }}</td>
+            <td>{{ product.name }}</td>
+            <td>{{ product.category }}</td>
+            <td>{{ product.quantity }}</td>
+            <td>{{ product.price }}</td>
+          </tr>
+        </tbody>
+        <tr>
+          <td colSpan="4">Total Price</td>
+          <td>
+            <b>RS.{{ order.totalAmount }}</b>
+          </td>
+        </tr>
+      </table>
+    </div>
+  </div>
+</div>

@@ -106,7 +106,9 @@ app.post("/api/updateAllOrders", async (req, res) => {
   const totalPrice = req.body.finalTotalPrice;
   const cartItems = req.body.items;
   const userId = req.body.userId;
-  console.log("Total Price: ", totalPrice);
+  const orderOTP = Math.floor(1000 + Math.random() * 9000);
+  //console.log("Total Price: ", totalPrice);
+
   // console.log("userIdd : ", user);
   //console.log("Cart Items :: ", cartItems);
   ///
@@ -147,7 +149,7 @@ app.post("/api/updateAllOrders", async (req, res) => {
     // console.log("ShopId : ", cartItemShopId);
     // Step 3: Insert the new data with the new orderId into the orders table
     // const insertOrderQuery = `INSERT INTO orders (orderId, shopId, userId, dateTime,orderStatus) VALUES (\"${newOrderId}\",\"${cartItemShopId}\", 'U0001', NOW(),0)`;
-    const insertOrderQuery = `INSERT INTO orders (orderId, shopId, userId, dateTime,orderStatus,totalAmount) VALUES (\"${newOrderId}\",\"${cartItemShopId}\", \"${userId}\", NOW(),0,${totalPrice})`;
+    const insertOrderQuery = `INSERT INTO orders (orderId, shopId, userId, dateTime,orderStatus,totalAmount,orderOTP) VALUES (\"${newOrderId}\",\"${cartItemShopId}\", \"${userId}\", NOW(),0,${totalPrice},${orderOTP})`;
 
     connection.query(insertOrderQuery, (err, result) => {
       // if (err) {
@@ -492,6 +494,7 @@ app.post("/api/logIn", (req, res) => {
 //add shop Item
 
 app.post("/api/addShopItem", (req, res) => {
+  const shopId = req.body.shopId;
   const itemName = req.body.itemName;
   const itemPrice = req.body.itemPrice;
   const category = req.body.category;
@@ -512,7 +515,7 @@ app.post("/api/addShopItem", (req, res) => {
     // console.log(this.finalProductId);
     // console.log(itemName, itemPrice, category);
 
-    const addItemQuery = `INSERT INTO product(productId,name,price,shopId,category,review,rating)VALUES(\"${newProductId}\",\"${itemName}\",${itemPrice},"S0001",\"${category}\","No review",4.2)`;
+    const addItemQuery = `INSERT INTO product(productId,name,price,shopId,category,review,rating)VALUES(\"${newProductId}\",\"${itemName}\",${itemPrice},\"${shopId}\",\"${category}\","No review",4.2)`;
     connection.query(addItemQuery, (err, result) => {
       if (err) {
         console.error("Error Adding Item:", err);

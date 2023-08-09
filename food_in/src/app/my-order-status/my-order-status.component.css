@@ -1,11 +1,22 @@
-table {
-  border-collapse: separate; /* Ensure borders are separate */
-  border-spacing: 10px; /* Set the spacing between cells */
+/* table {
+  border-collapse: separate; 
+  border-spacing: 10px; 
 }
 
-/* Style the table cells with borders */
 td,
 th {
-  border: 1px solid black; /* Add borders to the cells */
-  padding: 10px; /* Optional: Add padding inside the cells */
+  border: 1px solid black; 
+  padding: 10px; 
+} */
+
+table {
+  border-collapse: separate;
+}
+
+td {
+  margin: 10px;
+  padding: 10px;
+}
+.card {
+  display: flex;
 }

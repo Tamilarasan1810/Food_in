@@ -265,7 +265,9 @@ export class FoodServicesService {
 
   addShopItem(itemName: string, itemPrice: number, category: string) {
     const addShopItemUrl = `http://localhost:3000/api/addShopItem`;
+    const shopId = 'S0001';
     return this.http.post<any>(addShopItemUrl, {
+      shopId,
       itemName,
       itemPrice,
       category,

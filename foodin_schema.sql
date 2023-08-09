@@ -53,9 +53,12 @@ SELECT * FROM product;
 /*ALTER TABLE orders ADD totalAmount INT;*/
 /*UPDATE orders SET totalAmount = 0 where orderId>="O0001";*/
 
+/*ALTER TABLE orders ADD orderOTP INT;*/
+/*UPDATE orders SET orderOtp=4392  WHERE orderId>="O0001";*/
+
 delete from product where productId>="P0004";
-DELETE from orders where orderId>="O0002";
-DELETE from allorders where orderId>="O0002";
+DELETE from orders where orderId>="O0001";
+DELETE from allorders where orderId>="O0001";
 /*UPDATE product SET productId='P0010' where productId="";*/
 
 

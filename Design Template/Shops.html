@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shops List</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <style>
+        body
+        {
+            margin: 5%;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        .header
+        {
+            position: relative;
+            text-align: center;
+        }
+
+        .header a
+        {
+            margin-right: 50px;
+            text-decoration: none;
+        }
+
+        .header a:hover
+        {
+            color: red;
+        }
+
+        .shop
+        {
+            border-radius: 10px;
+            height: 340px;
+            width: 270px;
+            background: #ecc216;
+            overflow: hidden;
+            transition: all 1.2s ease-in-out;
+            cursor: pointer;
+        }
+
+        .shop-img
+        {
+            width: 100%;
+            min-height: 260px;
+            max-height: 260px;
+            transition: all 0.2s ease-in-out;
+        }
+
+        .shop-text
+        {
+            color: white;
+            font-size: 20px;
+            position: relative;
+            top: 10px;
+            left: 10px;
+        }
+
+        .hover-text
+        {
+            color: white;
+            position: relative;
+            opacity: 0;
+            left: 10px;
+            font-size: 20px;
+            transition: all 0.2s ease-in-out;
+        }
+
+        .lets-go:hover
+        {
+            background: white;
+            color: black;
+        }
+
+        .shop:hover .hover-text
+        {
+            top: -40px;
+            opacity: 1;
+        }
+
+        .shop:hover .shop-img
+        {
+            transform: scale(1.1) translate(0, -50px);
+        }
+
+        .lets-go
+        {
+            border-color: white;
+            border-width: 1px 0px 0px 1px;
+            background: #ecc216;
+            color: white;
+            height: 30px;
+            width: 100px;
+            position: relative;
+            top: -5px;
+            left: 8px;
+            border-radius: 10px;
+            transition: all 0.2s ease-in-out;
+        }
+
+        .shop:hover .lets-go
+        {
+            top: -55px;
+        }
+
+        .shops-list
+        {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr 1fr;
+            grid-template-rows: 380px;
+            grid-column-gap: 10px;
+            grid-row-gap: 30px;
+            place-items: center;
+        }
+
+        @media screen and (max-width: 589px)
+        {
+            .shops-list
+            {
+                grid-template-columns: 1fr;
+            }
+
+            .hover-text
+            {
+                opacity: 1;
+                top: -40px;
+            }
+
+            .lets-go
+            {
+                left: 150px;
+                top: -15px;
+            }
+        }
+
+        @media screen and (max-width: 500px)
+        {
+            .header a:nth-child(3), .header a:nth-child(4)
+            {
+                position: relative;
+                top: 50px;
+                left: -40%;
+            }
+        }
+
+        @media screen and (min-width: 590px) and (max-width: 980px)
+        {
+            .shops-list
+            {
+                grid-template-columns: 1fr 1fr;
+            }
+
+            .hover-text
+            {
+                opacity: 1;
+                top: -40px;
+            }
+
+            .lets-go
+            {
+                left: 150px;
+                top: -15px;
+            }
+        }
+
+        @media screen and (min-width: 981px) and (max-width: 1200px)
+        {
+            .shops-list
+            {
+                grid-template-columns: 1fr 1fr 1fr;
+            }
+
+            .hover-text
+            {
+                opacity: 1;
+                top: -40px;
+            }
+
+            .lets-go
+            {
+                left: 150px;
+                top: -15px;
+            }
+        }
+
+    </style>
+</head>
+<body>
+    <div class="header">
+        <a href="#dashboard">DashBoard</a>
+        <a href="#items">Items</a>
+        <a href="#orders">Orders</a>
+        <a href="#cart">Cart</a>
+    </div>
+
+    <br><Br><Br>
+
+    <div style="font-size: 40px; font-family: Arial, Helvetica, sans-serif;"><center>Choose Your Restaurant</center></div>
+
+    <br><br><br>
+    <div class="shops-list">
+        <div class="shop">
+            <img class="shop-img" width="100%" src="Restaurant1.jpeg">
+            <div class="hover-text">Mathsya</div>
+            <div class="shop-text">Rating: 4.2 &nbsp;<span class="fa fa-star checked"></span>
+            </div>
+            <button class="lets-go hover-text">Let's Go </button>
+        </div>
+
+        <div class="shop">
+            <img class="shop-img" src="Restaurant2.jpg">
+            <div class="hover-text">Sri Mithai</div>
+            <div class="shop-text">Rating: 4.2 &nbsp;<span class="fa fa-star checked"></span>
+            </div>
+            <button class="lets-go hover-text">Let's Go </button>
+        </div>
+
+        <div class="shop">
+            <img class="shop-img" src="Restaurant3.jpeg" width>
+            <div class="hover-text">Saravana Bhavan</div>
+            <div class="shop-text">Rating: 4.2 &nbsp;<span class="fa fa-star checked"></span>
+            </div>
+            <button class="lets-go hover-text">Let's Go </button>
+        </div>
+
+
+        <div class="shop">
+            <img class="shop-img" width="100%" src="Restaurant4.jpg" width>
+            <div class="hover-text">Adyar Ananda Bhavan</div>
+            <div class="shop-text">Rating: 4.2 &nbsp;<span class="fa fa-star checked"></span>
+            </div>
+            <button class="lets-go hover-text">Let's Go </button>
+        </div>
+
+
+        <div class="shop">
+            <img class="shop-img" width="100%" src="Restaurant3.jpeg">
+            <div class="hover-text">Krishna's Dosa Kadai</div>
+            <div class="shop-text">Rating: 4.2 &nbsp;<span class="fa fa-star checked"></span>
+            </div>
+            <button class="lets-go hover-text">Let's Go </button>
+        </div>
+
+        <div class="shop">
+            <img class="shop-img" src="Restaurant4.jpg">
+            <div class="hover-text">Domino's Pizza</div>
+            <div class="shop-text">Rating: 4.2 &nbsp;<span class="fa fa-star checked"></span>
+            </div>
+            <button class="lets-go hover-text">Let's Go </button>
+        </div>
+
+        <div class="shop">
+            <img class="shop-img" src="Restaurant2.jpg" width>
+            <div class="hover-text">La Pinoz</div>
+            <div class="shop-text">Rating: 4.2 &nbsp;<span class="fa fa-star checked"></span>
+            </div>
+            <button class="lets-go hover-text">Let's Go </button>
+        </div>
+
+        <div class="shop">
+            <img class="shop-img" width="100%" src="Restaurant1.jpeg" width>
+            <div class="hover-text">National Lodge</div>
+            <div class="shop-text">Rating: 4.2 &nbsp;<span class="fa fa-star checked"></span>
+            </div>
+            <button class="lets-go hover-text">Let's Go </button>
+        </div>
+
+    </div>
+</body>
+</html>

@@ -1,5 +1,5 @@
 <h2>Available Shops</h2>
-<div>
+<!-- <div>
   <div>
     <table border="1">
       <tr>
@@ -22,19 +22,26 @@
       </tr>
     </table>
   </div>
-</div>
-<!-- <div class="shops">
-  <div
-    *ngFor="let shop of shops"
-    class="card mx-auto mb-3"
-    style="width: 18rem"
-  >
-    <img src="{{ shop.imageUrl }}" class="card-img-top" alt="..." />
-    <div class="card-body">
-      <p class="card-text">
-        {{ shop.name }}
-      </p>
-      <h6>{{ shop.rating }}</h6>
-    </div>
-  </div>
 </div> -->
+
+<!-- ^^^^^^^^^^ Before Designing -->
+
+<!--  -->
+
+<div class="shops-list" *ngFor="let item of shops">
+  <div class="shop">
+    <img
+      src="https://slp-statics.astockcdn.net/static_assets/staging/23summer/curated-collections/card-5.jpg?width=580&format=webp"
+      alt="Shop Image"
+      width="100%"
+      class="shop-img"
+    />
+    <div class="hover-text">{{ item.shopName }}</div>
+    <div class="shop-text">
+      rating {{ item.rating }} &nbsp;<span class="fa fa-star checked"></span>
+    </div>
+    <button class="lets-go hover-text" (click)="log(item.shopId)">
+      Let's Go
+    </button>
+  </div>
+</div>

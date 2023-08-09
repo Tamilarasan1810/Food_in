@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Menu</title>
+
+    <style>
+        body
+        {
+            font-family: Arial, Helvetica, sans-serif;
+            font-size: 34px;
+        }
+
+        .header
+        {
+            position: relative;
+            text-align: center;
+        }
+
+        .header a
+        {
+            font-size: 16px;
+            margin-right: 50px;
+            text-decoration: none;
+        }
+
+        .header a:hover
+        {
+            color: red;
+        }
+
+        .menu-items
+        {
+            font-size: 30px;
+            border-radius: 5px;
+            background: #cdcdd2;
+            display: grid;
+            grid-template-columns: 1fr 4fr;
+            overflow: hidden;
+            height: 150px;
+        }
+
+        .item-price
+        {
+            font-size: 20px;
+            position: relative;
+            left: 280px;
+            top: -30px;
+        }
+
+        .item-name
+        {
+            padding-top: 10px;
+            position: relative;
+            left: 50px;
+        }
+
+        .inc-dec
+        {
+            cursor: pointer;
+            border-radius: 100px;
+            position: relative;
+            left: 40px;
+        }
+
+        .quantity
+        {
+            position: relative;
+            left: 40px;
+        }
+
+        .inc-dec:hover
+        {
+            background: grey;
+        }
+
+        .menu
+        {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            grid-gap: 40px;
+            margin-left: 3%;
+            margin-right: 3%;
+        }
+
+        .item-image
+        {
+            height: 150px;
+            overflow: hidden;
+            max-width: 114px;
+            border-radius: 5px 0px 0px 5px;
+        }
+
+        .inc-dec, .quantity
+        {
+            font-size: 24px;
+            top: 35px;
+        }
+
+        .add-to-cart
+        {
+            width: 100px;
+            height: 35px;
+            color: white;
+            background: rgb(87, 85, 85);
+            border-radius: 5px;
+            border-color: white;
+            border-width: 1px;
+            position: relative;
+            top: 30px;
+            left: 125px;
+            transition: all 0.2s ease-in-out;
+        }
+
+        .add-to-cart:hover
+        {
+            background: white;
+            color: black;
+        }
+
+        .shopping-cart
+        {
+            position: relative;
+            top: 2px;
+        }
+
+        @media screen and (max-width: 500px)
+        {
+            .menu
+            {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media screen and (min-width: 501px) and (max-width: 1200px)
+        {
+            .menu
+            {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+    </style>
+
+    <script>
+        function add_val(action, id)
+        {
+            let x = document.getElementById(id);
+            let count = Number(x.innerHTML);
+            if(action == "add")
+                count += 1;
+            else if(action == "minus")
+                if(count > 0)
+                    count -= 1;
+
+            x.innerHTML = count;
+            console.log(count);
+        }
+    </script>
+</head>
+<body>
+    <br>
+    <div class="header">
+        <a href="#dashboard">DashBoard</a>
+        <a href="#items">Items</a>
+        <a href="#orders">Orders</a>
+        <a href="#cart">Cart</a>
+    </div>
+    <br>
+    <div><center>Choose Your Order</center></div>
+    <br><Br>
+    <div class="menu">
+        <div class="menu-items">
+            <img src="Dosa.jpeg" class="item-image" alt="Image not found! OOOOOOooooooooorama po!">
+            <div class="item-description">
+                <div class="item-name">Dosa</div>
+                <div class="item-price">Rs 60</div>
+                <span class="inc-dec" onclick="add_val('minus', 'quantity1')">&nbsp;&nbsp;-&nbsp;&nbsp;</span>
+                <span class="quantity" id="quantity1">2</span>
+                <span class="inc-dec" onclick="add_val('add', 'quantity1')">&nbsp;&nbsp;+&nbsp;&nbsp;</span>
+                <button class="add-to-cart">Add to cart <img class="shopping-cart" width="15%" src="shopping-cart.png"></button>
+            </div>
+        </div>
+
+        <div class="menu-items">
+            <img src="Idli.jpeg" class="item-image" alt="Image not found! OOOOOOooooooooorama po!">
+            <div class="item-description">
+                <div class="item-name">Idli</div>
+                <div class="item-price">Rs 30</div>
+                <span class="inc-dec" onclick="add_val('minus', 'quantity2')">&nbsp;&nbsp;-&nbsp;&nbsp;</span>
+                <span class="quantity" id="quantity2">2</span>
+                <span class="inc-dec" onclick="add_val('add', 'quantity2')">&nbsp;&nbsp;+&nbsp;&nbsp;</span>
+                <button class="add-to-cart">Add to cart <img class="shopping-cart" width="15%" src="shopping-cart.png"></button>
+            </div>
+        </div>
+
+        <div class="menu-items">
+            <img src="Dosa.jpeg" class="item-image" alt="Image not found! OOOOOOooooooooorama po!">
+            <div class="item-description">
+                <div class="item-name">Dosa</div>
+                <div class="item-price">Rs 60</div>
+                <span class="inc-dec" onclick="add_val('minus', 'quantity3')">&nbsp;&nbsp;-&nbsp;&nbsp;</span>
+                <span class="quantity" id="quantity3">2</span>
+                <span class="inc-dec" onclick="add_val('add', 'quantity3')">&nbsp;&nbsp;+&nbsp;&nbsp;</span>
+                <button class="add-to-cart">Add to cart <img class="shopping-cart" width="15%" src="shopping-cart.png"></button>
+            </div>
+        </div>
+
+        <div class="menu-items">
+            <img src="Idli.jpeg" class="item-image" alt="Image not found! OOOOOOooooooooorama po!">
+            <div class="item-description">
+                <div class="item-name">Idli</div>
+                <div class="item-price">Rs 30</div>
+                <span class="inc-dec" onclick="add_val('minus', 'quantity2')">&nbsp;&nbsp;-&nbsp;&nbsp;</span>
+                <span class="quantity" id="quantity2">2</span>
+                <span class="inc-dec" onclick="add_val('add', 'quantity2')">&nbsp;&nbsp;+&nbsp;&nbsp;</span>
+                <button class="add-to-cart">Add to cart <img class="shopping-cart" width="15%" src="shopping-cart.png"></button>
+            </div>
+        </div>
+
+        <div class="menu-items">
+            <img src="Dosa.jpeg" class="item-image" alt="Image not found! OOOOOOooooooooorama po!">
+            <div class="item-description">
+                <div class="item-name">Dosa</div>
+                <div class="item-price">Rs 60</div>
+                <span class="inc-dec" onclick="add_val('minus', 'quantity3')">&nbsp;&nbsp;-&nbsp;&nbsp;</span>
+                <span class="quantity" id="quantity3">2</span>
+                <span class="inc-dec" onclick="add_val('add', 'quantity3')">&nbsp;&nbsp;+&nbsp;&nbsp;</span>
+                <button class="add-to-cart">Add to cart <img class="shopping-cart" width="15%" src="shopping-cart.png"></button>
+            </div>
+        </div>
+
+        <div class="menu-items">
+            <img src="Idli.jpeg" class="item-image" alt="Image not found! OOOOOOooooooooorama po!">
+            <div class="item-description">
+                <div class="item-name">Idli</div>
+                <div class="item-price">Rs 30</div>
+                <span class="inc-dec" onclick="add_val('minus', 'quantity2')">&nbsp;&nbsp;-&nbsp;&nbsp;</span>
+                <span class="quantity" id="quantity2">2</span>
+                <span class="inc-dec" onclick="add_val('add', 'quantity2')">&nbsp;&nbsp;+&nbsp;&nbsp;</span>
+                <button class="add-to-cart">Add to cart <img class="shopping-cart" width="15%" src="shopping-cart.png"></button>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
